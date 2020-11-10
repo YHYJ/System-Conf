@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: polybar-script_trash
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-05-30 21:00:27
+
+Description: 操作回收站
+
+Attentions:
+- 根据参数确定操作
+
+Depends:
+- findutils
+- libnotify
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=1.0
+readonly minor_version=20200801
+readonly rel_version=1
+
+#------------------------- Exit Code Variable
+readonly normal=0    # 一切正常
+readonly err_param=2 # 参数错误
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="用于Polybar操作回收站文件"
+# path variable
+readonly trash_path="$HOME/.local/share/Trash/files"
+# count variable
+readonly number=$(find "$trash_path" -maxdepth 1 | wc -l)
+readonly real_number=$((number - 1))
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     -n, --number      回收站文件计数"
+  echo -e "     -l, --list        列出回收站文件"
+  echo -e ""
+  echo -e "     -h, --help        显示帮助信息"
+  echo -e "     -v, --version     显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+#------------------------- Feature Function
+function number() {
+  #function_body
+  if [[ $real_number != 0 ]]; then
+    echo "$real_number"
+  else
+    echo ""
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+case $1 in
+-n | --number)
+  number
+  ;;
+-l | --list)
+  notify-send --app-name='Trash info' "List" "$(ls -A "$trash_path")"
+  ;;
+-h | --help)
+  helpInfo
+  exit $normal
+  ;;
+-v | --version)
+  versionInfo
+  exit $normal
+  ;;
+*)
+  exit $err_param
+  ;;
+esac

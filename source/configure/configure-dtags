@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: configure-dtags
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 10:38:44
+
+Description: 配置dtags
+
+Attentions:
+-
+
+Depends:
+- dtags
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_file=1         # 文件/路径类错误
+readonly err_permission=110 # 权限错误
+
+#------------------------- Parameter Variable
+# path variable
+readonly dtags_path="/usr/bin/dtags-activate"
+readonly myrepos="$HOME/Documents/MyRepos"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function askQuestion() {
+  while true; do
+    read -e -r -p "$1"
+    echo
+    if [[ "$REPLY" =~ ^[Yy] ]]; then
+      return 0
+    elif [[ "$REPLY" =~ ^[Nn] ]]; then
+      return 1
+    else
+      echo -e "应输入 Y/y 或 N/n.\n"
+    fi
+  done
+}
+
+#------------------------- Feature Function
+function checkUser() {
+  if [[ $USER == "$1" ]]; then
+    echo -e "\n\\e[31m[✘]\\e[0m 当前用户是$1，拒绝执行！！！"
+    exit $err_permission
+  fi
+}
+
+function addTags() {
+  num=0
+  if [[ -d "$myrepos" ]]; then
+    for file in "$myrepos"/*; do
+      if [[ -d "$file" ]]; then
+        if [[ -d "$file"/.git ]]; then
+          dtags-t "$file" "repo" && eval "$(dtags-refresh zsh)"
+          ((num++))
+        else
+          echo -e "$file不是一个repo，忽略.\n"
+        fi
+      elif [[ -f "$file" ]]; then
+        echo -e "$file是文本文件，忽略.\n"
+      else
+        echo -e "$file文件类型未知，忽略.\n"
+      fi
+    done
+  else
+    echo -e "\\e[31m$myrepos目录不存在\\e[0m\n"
+    exit $err_file
+  fi
+
+  echo -e "\\e[34m已创建/存在共\\e[0m\\e[32m$num\\e[0m\\e[34m个dtags.\\e[0m\n"
+  exit $normal
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+checkUser "root"
+
+if [[ -x "$dtags_path" ]]; then
+  addTags "repo"
+else
+  if askQuestion "未安装dtags，是否现在安装？ [Y/n] "; then
+    echo
+    installPkg
+  else
+    echo -e "退出\n"
+  fi
+fi

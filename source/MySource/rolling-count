@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: rolling-count
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:45:57
+
+Description: 统计系统自安装以来更新的次数
+
+Attentions:
+-
+
+Depends:
+-
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+# statistics variable
+readonly installation_time=$(head -n1 /var/log/pacman.log | cut -d " " -f 1,2)
+readonly count=$(grep -c "full system upgrade" /var/log/pacman.log)
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+echo -e "\\e[35m$installation_time\\e[0m" 以来风滚草滚动了 "\\e[37m$count\\e[0m" 次

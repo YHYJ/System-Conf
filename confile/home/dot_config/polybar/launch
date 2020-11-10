@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+: <<!
+File: launch
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-03-12 00:29:12
+
+Description: polybar launcher
+!
+
+# 终止正在运行的polybar实例
+killall -q polybar
+# 因为bar启用了ipc，也可以直接使用`polybar-msg`命令重启
+
+# 创建日志文件
+echo "---" | tee -a /tmp/polybar.log
+
+# 启动polybar实例
+polybar --reload mypolybar >>/tmp/polybar.log 2>&1 &
+
+# 记录日志
+echo -e "<$(date '+%Y.%m.%d %H:%M:%S')> Polybar launched..." >>/tmp/polybar.log 2>&1 &

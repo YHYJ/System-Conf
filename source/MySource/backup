@@ -1,0 +1,804 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: backup
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2019-08-06 09:01:12
+
+Description: 系统配置文件备份工具
+
+Attentions:
+- /boot
+- /etc
+- /usr
+- $HOME/.config
+
+Depends:
+- diffutils/colordiff
+- coreutils
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program nversion
+readonly major_version=2.3
+readonly minor_version=20200810
+readonly rel_version=1
+
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_param=2        # 参数错误
+readonly err_unknown=255    # 未知错误
+readonly err_permission=110 # 权限错误
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="是Linux下用来备份系统信息的工具"
+# 总备份文件存储路径
+readonly backup_path="$HOME/Documents/MyRepos/System-Conf"
+
+## 需要备份的文件的前缀路径
+# cache
+readonly cache_dir="$HOME/.cache/mycache"
+# .config
+readonly dot_config_path="$HOME/.config"
+# .local
+readonly dot_local_path="$HOME/.local"
+# boot
+readonly boot_path="/boot/loader"
+# boot备份文件配置路径
+readonly boot_path_back="$backup_path/confile/boot/loader"
+
+#------------------------- Derived Variable
+## boot -> /boot
+readonly boot_loader="$boot_path/loader.conf"
+readonly boot_loader_back="$boot_path_back/loader.conf"
+readonly boot_entries="$boot_path/entries"
+readonly boot_entries_back="$boot_path_back"
+
+## etc -> /etc
+# makepkg
+readonly makepkg_config=/etc/makepkg.conf
+readonly makepkg_config_back="$backup_path/confile/etc/makepkg.conf"
+# docker
+readonly docker_daemon="/etc/docker/daemon.json"
+readonly docker_daemon_back="$backup_path/confile/etc/docker/daemon.json"
+readonly docker_override="/etc/systemd/system/docker.service.d/override.conf"
+readonly docker_override_back="$backup_path/confile/etc/docker/override.conf"
+# laptop-mode-tools
+readonly lmt_config="/etc/laptop-mode"
+readonly lmt_config_back="$backup_path/confile/etc"
+# module.modprobe.d
+readonly modprobe_file="/etc/modprobe.d"
+readonly modprobe_file_back="$backup_path/confile/etc"
+# module.modules-load.d
+readonly modules_load_file="/etc/modules-load.d"
+readonly modules_load_file_back="$backup_path/confile/etc"
+# pacman.config
+readonly pacman_config="/etc/pacman.conf"
+readonly pacman_config_back="$backup_path/confile/etc/pacman.conf"
+# pacman.mirrorlist
+readonly pacmand_mirrorlist="/etc/pacman.d/mirrorlist"
+readonly pacmand_mirrorlist_back="$backup_path/confile/etc/pacman.d/mirrorlist"
+readonly pacmand_archlinuxcn_mirrorliss="/etc/pacman.d/archlinuxcn-mirrorlist"
+readonly pacmand_archlinuxcn_mirrorliss_back="$backup_path/confile/etc/pacman.d/archlinuxcn-mirrorlist"
+readonly pacmand_repock_mirrorlist="/etc/pacman.d/repo-ck-mirrorlist"
+readonly pacmand_repock_mirrorlist_back="$backup_path/confile/etc/pacman.d/repo-ck-mirrorlist"
+# pacman.hooks
+readonly pacmand_hooks_file="/etc/pacman.d/hooks"
+readonly pacmand_hooks_file_back="$backup_path/confile/etc/pacman.d"
+# polkit-1.rules.d
+readonly rules_file="/etc/polkit-1/rules.d"
+readonly rules_file_back="$backup_path/confile/etc/polkit-1"
+# profile.profile
+readonly profile_config="/etc/profile"
+readonly profile_config_back="$backup_path/confile/etc/profile"
+# profile.profile.d
+readonly profiled_sh="/etc/profile.d"
+readonly profiled_sh_back="$backup_path/confile/etc/profile.d"
+readonly proshs=(
+  browser.sh editor.sh
+  go.sh nim.sh rust.sh
+  vaapi.sh
+)
+# X11.xorg.conf.d
+readonly xorg_config="/etc/X11/xorg.conf.d"
+readonly xorg_config_back="$backup_path/confile/etc/X11"
+# sddm
+readonly sddm_config="/etc/sddm.conf"
+readonly sddm_config_back="$backup_path/confile/etc/sddm.conf"
+
+## usr -> /usr
+# cursor
+readonly cursor_config="/usr/share/icons/default/index.theme"
+readonly cursor_config_back="$backup_path/confile/usr/share/icons/default/index.theme"
+
+## home -> /home/$USER
+# ssh
+readonly ssh_config="$HOME/.ssh/config"
+readonly ssh_config_back="$backup_path/confile/home/ssh/config"
+# Templates
+readonly templates_file="$HOME/.Templates"
+readonly templates_file_back="$backup_path/confile/home"
+# Pictures
+readonly pictures_file="$HOME/Pictures"
+readonly pictures_file_back="$backup_path/manual/Pictures"
+# dtags
+readonly dtags_file="$HOME/.dtags"
+readonly dtags_file_back="$backup_path/confile/home"
+# rust.config
+readonly rust_config="$HOME/.cargo/config"
+readonly rust_config_back="$backup_path/confile/home/cargo/config"
+# vim
+readonly vim_config="$HOME/.space-vim/private/config.vim"
+readonly vim_config_back="$backup_path/confile/home/vim/config.vim"
+readonly vim_packages="$HOME/.space-vim/private/packages.vim"
+readonly vim_packages_back="$backup_path/confile/home/vim/packages.vim"
+readonly vim_spacevim="$HOME/.spacevim"
+readonly vim_spacevim_back="$backup_path/confile/home/vim/spacevim"
+# pam_environment
+readonly pam_env="$HOME/.pam_environment"
+readonly pam_env_back="$backup_path/confile/home/pam_environment/pam_environment"
+# xprofile
+readonly xprofile_config="$HOME/.xprofile"
+readonly xprofile_config_back="$backup_path/confile/home/xprofile/xprofile"
+# zsh
+readonly zsh_config="$HOME/.zshrc"
+readonly zsh_config_back="$backup_path/confile/home/zsh/zshrc"
+readonly zsh_env="$HOME/.zshenv"
+readonly zsh_env_back="$backup_path/confile/home/zsh/zshenv"
+readonly zsh_theme_p10k="$HOME"/.p10k.zsh
+readonly zsh_theme_p10k_back="$backup_path/confile/home/zsh/themes/p10k.zsh"
+
+## dot_config -> /home/$USER/.config
+# chromium
+readonly chromium_flags_config="$dot_config_path/chromium-flags.conf"
+readonly chromium_flags_config_back="$backup_path/confile/home/dot_config/chromium/chromium-flags.conf"
+# font
+readonly font_config="$dot_config_path/fontconfig"
+readonly font_config_back="$backup_path/confile/home/dot_config"
+# GTK-2
+readonly gtk2_config="$HOME/.gtkrc-2.0"
+readonly gtk2_config_back="$backup_path/confile/home/dot_config/gtk/gtkrc-2.0"
+readonly gtk2_file="$dot_config_path/gtk-2.0"
+readonly gtk2_file_back="$backup_path/confile/home/dot_config/gtk"
+# GTK-3
+readonly gtk3_file="$dot_config_path/gtk-3.0"
+readonly gtk3_file_back="$backup_path/confile/home/dot_config/gtk"
+# locale
+readonly locale_config="$dot_config_path/locale.conf"
+readonly locale_config_back="$backup_path/confile/home/dot_config/locale/locale.conf"
+# golang
+readonly golang_env="$dot_config_path/go/env"
+readonly golang_env_back="$backup_path/confile/home/dot_config/go/env"
+# i3wm
+readonly i3_config="$dot_config_path/i3/config"
+readonly i3_config_back="$backup_path/confile/home/dot_config/i3/config"
+# neofetch
+readonly neofetch_config="$dot_config_path/neofetch/config.conf"
+readonly neofetch_config_back="$backup_path/confile/home/dot_config/neofetch/config.conf"
+# deepin-terminal
+readonly deepin_terminal_file="$dot_config_path/deepin/deepin-terminal"
+readonly deepin_terminal_file_back="$backup_path/confile/home/dot_config/deepin"
+# dunst
+readonly dunst_config="$dot_config_path/dunst/dunstrc"
+readonly dunst_config_back="$backup_path/confile/home/dot_config/dunst/dunstrc"
+# fcitx5.config
+readonly fcitx5_config="$dot_config_path/fcitx5"
+readonly fcitx5_config_back="$backup_path/confile/home/dot_config"
+# fcitx5.file
+readonly fcitx5_file_pinyin="$dot_local_path/share/fcitx5/pinyin"
+readonly fcitx5_file_pinyin_back="$backup_path/confile/home/dot_local/share/fcitx5"
+# mpd
+readonly mpd_config="$dot_config_path/mpd/mpd.conf"
+readonly mpd_config_back="$backup_path/confile/home/dot_config/mpd/mpd.conf"
+# polybar.config
+readonly polybar_file="$dot_config_path/polybar"
+readonly polybar_file_back="$backup_path/confile/home/dot_config"
+# polybar.service
+readonly polybar_checkupdates_service="/etc/systemd/system/polybar-checkupdates.service"
+readonly polybar_checkupdates_service_back="$backup_path/confile/etc/systemd/system/polybar-checkupdates.service"
+readonly polybar_checkupdates_timer="/etc/systemd/system/polybar-checkupdates.timer"
+readonly polybar_checkupdates_timer_back="$backup_path/confile/etc/systemd/system/polybar-checkupdates.timer"
+# rofi
+readonly rofi_file="$dot_config_path/rofi"
+readonly rofi_file_back="$backup_path/confile/home/dot_config"
+# terminator
+readonly terminator_config="$dot_config_path/terminator/config"
+readonly terminator_config_back="$backup_path/confile/home/dot_config/terminator/config"
+# user-dirs
+readonly userdirs_dirs="$dot_config_path/user-dirs.dirs"
+readonly userdirs_dirs_back="$backup_path/confile/home/dot_config/user-dirs/user-dirs.dirs"
+readonly userdirs_locale="$dot_config_path/user-dirs.locale"
+readonly userdirs_locale_back="$backup_path/confile/home/dot_config/user-dirs/user-dirs.locale"
+# AUR helper -- yay
+readonly yay_config="$dot_config_path/yay/config.json"
+readonly yay_config_back="$backup_path/confile/home/dot_config/yay/config.json"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "\e[1;33m备份路径\e[0m: \e[34m$backup_path\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     -s, --sync <ARGS>     指定备份内容"
+  echo -e ""
+  echo -e "     -h, --help            显示帮助信息"
+  echo -e "     -v, --version         显示版本信息"
+  echo -e ""
+  echo -e "The <ARGS> are:"
+  echo -e "     all                   备份以下全部"
+  echo -e "     boot                  备份EFI分区配置文件(/boot)"
+  echo -e "     etc                   备份系统级配置文件(/etc)"
+  echo -e "     usr                   备份软件级配置文件(/usr)"
+  echo -e "     user                  备份用户级配置文件($HOME)"
+  echo -e "     package               备份已安装软件包"
+  echo -e "     service               备份服务状态"
+  echo -e "     id                    备份当前用户($USER)所属组"
+  echo -e "     manual                备份手册文件"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+function logInfo() {
+  case $1 in
+  0)
+    echo -e "$2的备份文件已是最新"
+    ;;
+  1)
+    echo -e "\e[1;34m==>\e[0m 正在备份\e[4;36;40m$2\e[0m"
+    ;;
+  esac
+}
+
+function finishInfo() {
+  echo -e "\n\e[35m[✔]\e[0m 备份完成，未列出部分皆是最新备份"
+  exit $normal
+}
+
+#------------------------- Feature Function
+function checkUser() {
+  if [[ $USER == "$1" ]]; then
+    echo -e "\n\e[31m[✘]\e[0m 当前用户是$1，拒绝执行！！！"
+    exit $err_permission
+  fi
+}
+
+function updateCache() {
+  if [[ ! -d $cache_dir ]]; then
+    mkdir "$cache_dir"
+  fi
+
+  pacman -Qenq >"$cache_dir/pacman-pkglist"                       # 官方源中单独指定安装的软件包
+  pacman -Qemq >"$cache_dir/aur-pkglist"                          # AUR中单独指定安装的软件包
+  systemctl list-unit-files >"$cache_dir/ServiceList-system"      # System service
+  systemctl --user list-unit-files >"$cache_dir/ServiceList-user" # User service
+  id >"$cache_dir/$USER-ID"                                       # 当前$USER的id信息
+  guake --save-preferences="$cache_dir/guake.conf"                # guake的配置文件
+}
+
+function backupPackage() {
+  # Package.pacman
+  if ! diff -r "$cache_dir/pacman-pkglist" "$backup_path/system-info/pacman-pkglist" &>/dev/null; then
+    logInfo 1 "Package.pacman"
+    cp -r "$cache_dir/pacman-pkglist" "$backup_path/system-info/pacman-pkglist"
+  fi
+
+  # Package.AUR
+  if ! diff -r "$cache_dir/aur-pkglist" "$backup_path/system-info/aur-pkglist" &>/dev/null; then
+    logInfo 1 "Package.AUR"
+    cp -r "$cache_dir/aur-pkglist" "$backup_path/system-info/aur-pkglist"
+  fi
+}
+
+function backupService() {
+  # Service.system
+  if ! diff -r "$cache_dir/ServiceList-system" "$backup_path/system-info/ServiceList-system" &>/dev/null; then
+    logInfo 1 "Service.system"
+    cp -r "$cache_dir/ServiceList-system" "$backup_path/system-info/ServiceList-system"
+  fi
+
+  # Service.user
+  if ! diff -r "$cache_dir/ServiceList-user" "$backup_path/system-info/ServiceList-user" &>/dev/null; then
+    logInfo 1 "Service.user"
+    cp -r "$cache_dir/ServiceList-user" "$backup_path/system-info/ServiceList-user"
+  fi
+}
+
+function backupID() {
+  # Group.$USER
+  if ! diff -r "$cache_dir/$USER-ID" "$backup_path/system-info/$USER-ID" &>/dev/null; then
+    logInfo 1 "Group.$USER"
+    cp -r "$cache_dir/$USER-ID" "$backup_path/system-info/$USER-ID"
+  fi
+}
+
+function backupManual() {
+  # App.guake
+  if ! diff -r "$cache_dir/guake.conf" "$backup_path/manual/guake/guake.conf" &>/dev/null; then
+    logInfo 1 "Application.guake"
+    cp -r "$cache_dir/guake.conf" "$backup_path/manual/guake/guake.conf"
+  fi
+}
+
+function backupBootConfig() {
+  # boot.loader
+  if ! diff -r "$boot_loader" "$boot_loader_back" &>/dev/null; then
+    logInfo 1 "Boot.loader"
+    cp -r "$boot_loader" "$boot_loader_back"
+  fi
+
+  # boot.entries
+  if ! diff -r "$boot_entries" "$boot_entries_back/entries" &>/dev/null; then
+    logInfo 1 "Boot.entries"
+    cp -r "$boot_entries" "$boot_entries_back"
+  fi
+}
+
+function backupEtcConfig() {
+  # pacman.config
+  if ! diff -r "$pacman_config" "$pacman_config_back" &>/dev/null; then
+    logInfo 1 "Pacman.config"
+    cp -r "$pacman_config" "$pacman_config_back"
+  fi
+
+  # pacman.d.mirrorlist
+  if ! diff -r "$pacmand_mirrorlist" "$pacmand_mirrorlist_back" &>/dev/null; then
+    logInfo 1 "Pacman.d.mirrorlist"
+    cp -r "$pacmand_mirrorlist" "$pacmand_mirrorlist_back"
+  fi
+
+  # pacman.d.archlinuxcn-mirrorlist
+  if ! diff -r "$pacmand_archlinuxcn_mirrorliss" "$pacmand_archlinuxcn_mirrorliss_back" &>/dev/null; then
+    logInfo 1 "Pacman.d.archlinuxcn-mirrorlist"
+    cp -r "$pacmand_archlinuxcn_mirrorliss" "$pacmand_archlinuxcn_mirrorliss_back"
+  fi
+
+  # pacman.d.repo-ck-mirrorlist
+  if ! diff -r "$pacmand_repock_mirrorlist" "$pacmand_repock_mirrorlist_back" &>/dev/null; then
+    logInfo 1 "Pacman.d.repo-ck-mirrorlist"
+    cp -r "$pacmand_repock_mirrorlist" "$pacmand_repock_mirrorlist_back"
+  fi
+
+  # pacman.d.hooks
+  if ! diff -r "$pacmand_hooks_file" "$pacmand_hooks_file_back/hooks" &>/dev/null; then
+    logInfo 1 "Pacman.d.hooks"
+    cp -r "$pacmand_hooks_file" "$pacmand_hooks_file_back"
+  fi
+
+  # modprobe.d
+  if ! diff -r "$modprobe_file" "$modprobe_file_back/modprobe.d" &>/dev/null; then
+    logInfo 1 "Modprobe.d"
+    cp -r "$modprobe_file" "$modprobe_file_back"
+  fi
+
+  # modules-load.d
+  if ! diff -r "$modules_load_file" "$modules_load_file_back/modules-load.d" &>/dev/null; then
+    logInfo 1 "Modules-load.d"
+    cp -r "$modules_load_file" "$modules_load_file_back"
+  fi
+
+  # docker.daemon
+  if ! diff -r "$docker_daemon" "$docker_daemon_back" &>/dev/null; then
+    logInfo 1 "Docker.daemon"
+    cp -r "$docker_daemon" "$docker_daemon_back"
+  fi
+
+  # docker.override
+  if ! diff -r "$docker_override" "$docker_override_back" &>/dev/null; then
+    logInfo 1 "Docker.override"
+    cp -r "$docker_override" "$docker_override_back"
+  fi
+
+  # laptop-mode-tools
+  if ! diff -r "$lmt_config" "$lmt_config_back/laptop-mode" &>/dev/null; then
+    logInfo 1 "Loptop-mode-tools"
+    cp -r "$lmt_config" "$lmt_config_back"
+  fi
+
+  # rules.d
+  if ! diff -r "$rules_file" "$rules_file_back/rules.d" &>/dev/null; then
+    logInfo 1 "Rules.d"
+    cp -r "$rules_file" "$rules_file_back"
+  fi
+
+  # profile
+  if ! diff -r "$profile_config" "$profile_config_back" &>/dev/null; then
+    logInfo 1 "Profile"
+    cp -r "$profile_config" "$profile_config_back"
+  fi
+
+  # profile.d
+  for prosh in ${proshs[*]}; do
+    if ! diff -r "$profiled_sh/$prosh" "$profiled_sh_back/$prosh" &>/dev/null; then
+      logInfo 1 "Profile.d.$prosh"
+      cp -r "$profiled_sh/$prosh" "$profiled_sh_back/$prosh"
+    fi
+  done
+
+  # xorg.conf.d
+  if ! diff -r "$xorg_config" "$xorg_config_back/xorg.conf.d" &>/dev/null; then
+    logInfo 1 "Xorg.conf.d"
+    cp -r "$xorg_config" "$xorg_config_back"
+  fi
+
+  # sddm.config
+  if ! diff -r "$sddm_config" "$sddm_config_back" &>/dev/null; then
+    logInfo 1 "SDDM.config"
+    cp -r "$sddm_config" "$sddm_config_back"
+  fi
+
+  # makepkg.config
+  if ! diff -r "$makepkg_config" "$makepkg_config_back" &>/dev/null; then
+    logInfo 1 "Makepkg.config"
+    cp -r "$makepkg_config" "$makepkg_config_back"
+  fi
+
+  # Service.polybar-checkupdates.service
+  if ! diff -r "$polybar_checkupdates_service" "$polybar_checkupdates_service_back" &>/dev/null; then
+    logInfo 1 "Service.polybar-checkupdates.service"
+    cp -r "$polybar_checkupdates_service" "$polybar_checkupdates_service_back"
+  fi
+
+  # Service.polybar-checkupdates.timer
+  if ! diff -r "$polybar_checkupdates_timer" "$polybar_checkupdates_timer_back" &>/dev/null; then
+    logInfo 1 "Service.polybar-checkupdates.timer"
+    cp -r "$polybar_checkupdates_timer" "$polybar_checkupdates_timer_back"
+  fi
+}
+
+function backupUsrConfig() {
+  # cursor.theme
+  if ! diff -r "$cursor_config" "$cursor_config_back" &>/dev/null; then
+    logInfo 1 "Cursor.theme"
+    cp -r "$cursor_config" "$cursor_config_back"
+  fi
+}
+
+function backupUserConfig() {
+  # ssh.config
+  if ! diff -r "$ssh_config" "$ssh_config_back" &>/dev/null; then
+    logInfo 1 "Ssh.config"
+    cp -r "$ssh_config" "$ssh_config_back"
+  fi
+
+  # chromium.config
+  if ! diff -r "$chromium_flags_config" "$chromium_flags_config_back" &>/dev/null; then
+    logInfo 1 "Chromium.config"
+    cp -r "$chromium_flags_config" "$chromium_flags_config_back"
+  fi
+
+  # font.config
+  if ! diff -r "$font_config" "$font_config_back/fontconfig" &>/dev/null; then
+    logInfo 1 "Font.config"
+    cp -r "$font_config" "$font_config_back"
+  fi
+
+  # GTK-2.config
+  if ! diff -r "$gtk2_config" "$gtk2_config_back" &>/dev/null; then
+    logInfo 1 "GTK-2.config"
+    cp -r "$gtk2_config" "$gtk2_config_back"
+  fi
+
+  # GTK-2.file
+  if ! diff -r "$gtk2_file" "$gtk2_file_back/gtk-2.0" &>/dev/null; then
+    logInfo 1 "GTK-2.file"
+    cp -r "$gtk2_file" "$gtk2_file_back"
+  fi
+
+  # GTK-3
+  if ! diff -r "$gtk3_file" "$gtk3_file_back/gtk-3.0" &>/dev/null; then
+    logInfo 1 "GTK-3"
+    cp -r "$gtk3_file" "$gtk3_file_back"
+  fi
+
+  # locale.config
+  if ! diff -r "$locale_config" "$locale_config_back" &>/dev/null; then
+    logInfo 1 "Locale.config"
+    cp -r "$locale_config" "$locale_config_back"
+  fi
+
+  # golang.env
+  if ! diff -r "$golang_env" "$golang_env_back" &>/dev/null; then
+    logInfo 1 "Golang.env"
+    cp -r "$golang_env" "$golang_env_back"
+  fi
+
+  # Pictures.Blog
+  if ! diff -r "$pictures_file/Blog" "$pictures_file_back/Blog" &>/dev/null; then
+    logInfo 1 "Pictures.Blog"
+    cp -r "$pictures_file/Blog" "$pictures_file_back"
+  fi
+
+  # Pictures.HP
+  if ! diff -r "$pictures_file/HP" "$pictures_file_back/HP" &>/dev/null; then
+    logInfo 1 "Pictures.HP"
+    cp -r "$pictures_file/HP" "$pictures_file_back"
+  fi
+
+  # Pictures.Wallpapers
+  if ! diff -r "$pictures_file/Wallpapers" "$pictures_file_back/Wallpapers" &>/dev/null; then
+    logInfo 1 "Pictures.Wallpapers"
+    cp -r "$pictures_file/Wallpapers" "$pictures_file_back"
+  fi
+
+  # i3.config
+  if ! diff -r "$i3_config" "$i3_config_back" &>/dev/null; then
+    logInfo 1 "i3.config"
+    cp -r "$i3_config" "$i3_config_back"
+  fi
+
+  # vim.config
+  if ! diff -r "$vim_config" "$vim_config_back" &>/dev/null; then
+    logInfo 1 "Vim.config"
+    cp -r "$vim_config" "$vim_config_back"
+  fi
+
+  # vim.packages
+  if ! diff -r "$vim_packages" "$vim_packages_back" &>/dev/null; then
+    logInfo 1 "Vim.packages"
+    cp -r "$vim_packages" "$vim_packages_back"
+  fi
+
+  # vim.spacevim
+  if ! diff -r "$vim_spacevim" "$vim_spacevim_back" &>/dev/null; then
+    logInfo 1 "Vim.spacevim"
+    cp -r "$vim_spacevim" "$vim_spacevim_back"
+  fi
+
+  # deepin-terminal.config
+  if ! diff -r "$deepin_terminal_file" "$deepin_terminal_file_back/deepin-terminal" &>/dev/null; then
+    logInfo 1 "Deepin-terminal.config"
+    cp -r "$deepin_terminal_file" "$deepin_terminal_file_back"
+  fi
+
+  # dunst.config
+  if ! diff -r "$dunst_config" "$dunst_config_back" &>/dev/null; then
+    logInfo 1 "Dunst.config"
+    cp -r "$dunst_config" "$dunst_config_back"
+  fi
+
+  # fcitx5.config
+  if ! diff -r "$fcitx5_config" "$fcitx5_config_back/fcitx5" &>/dev/null; then
+    logInfo 1 "Fcitx5.config"
+    cp -r "$fcitx5_config" "$fcitx5_config_back"
+  fi
+
+  # fcitx5.file.pinyin
+  if ! diff -r "$fcitx5_file_pinyin" "$fcitx5_file_pinyin_back/pinyin" &>/dev/null; then
+    logInfo 1 "Fcitx5.file.pinyin"
+    cp -r "$fcitx5_file_pinyin" "$fcitx5_file_pinyin_back"
+  fi
+
+  # mpd.config
+  if ! diff -r "$mpd_config" "$mpd_config_back" &>/dev/null; then
+    logInfo 1 "Mpd.config"
+    cp -r "$mpd_config" "$mpd_config_back"
+  fi
+
+  # xprofile.config
+  if ! diff -r "$xprofile_config" "$xprofile_config_back" &>/dev/null; then
+    logInfo 1 "Xprofile.config"
+    cp -r "$xprofile_config" "$xprofile_config_back"
+  fi
+
+  # pam_environment
+  if ! diff -r "$pam_env" "$pam_env_back" &>/dev/null; then
+    logInfo 1 "Pam_environment"
+    cp -r "$pam_env" "$pam_env_back"
+  fi
+
+  # zsh.config
+  if ! diff -r "$zsh_config" "$zsh_config_back" &>/dev/null; then
+    logInfo 1 "Zsh.config"
+    cp -r "$zsh_config" "$zsh_config_back"
+  fi
+
+  # zsh.env
+  if ! diff -r "$zsh_env" "$zsh_env_back" &>/dev/null; then
+    logInfo 1 "Zsh.env"
+    cp -r "$zsh_env" "$zsh_env_back"
+  fi
+
+  # zsh.themes
+  if ! diff -r "$zsh_theme_p10k" "$zsh_theme_p10k_back" &>/dev/null; then
+    logInfo 1 "Zsh.themes"
+    cp -r "$zsh_theme_p10k" "$zsh_theme_p10k_back"
+  fi
+
+  # polybar
+  if ! diff -r "$polybar_file" "$polybar_file_back/polybar" &>/dev/null; then
+    logInfo 1 "Polybar.config"
+    cp -r "$polybar_file" "$polybar_file_back"
+  fi
+
+  # rofi.config
+  if ! diff -r "$rofi_file" "$rofi_file_back/rofi" &>/dev/null; then
+    logInfo 1 "Rofi.config"
+    cp -r "$rofi_file" "$rofi_file_back"
+  fi
+
+  # dtags
+  if ! diff -r "$dtags_file" "$dtags_file_back/dtags" &>/dev/null; then
+    logInfo 1 "Dtags.tags"
+    cp -r "$dtags_file/tags" "$dtags_file_back/dtags/tags"
+    logInfo 1 "Dtags.mapping"
+    cp -r "$dtags_file/mapping" "$dtags_file_back/dtags/mapping"
+  fi
+
+  # terminator.config
+  if ! diff -r "$terminator_config" "$terminator_config_back" &>/dev/null; then
+    logInfo 1 "Terminator.config"
+    cp -r "$terminator_config" "$terminator_config_back"
+  fi
+
+  # user-dirs.dirs
+  if ! diff -r "$userdirs_dirs" "$userdirs_dirs_back" &>/dev/null; then
+    logInfo 1 "User-dirs.dirs"
+    cp -r "$userdirs_dirs" "$userdirs_dirs_back"
+  fi
+
+  # user-dirs.locale
+  if ! diff -r "$userdirs_locale" "$userdirs_locale_back" &>/dev/null; then
+    logInfo 1 "User-dirs.locale"
+    cp -r "$userdirs_locale" "$userdirs_locale_back"
+  fi
+
+  # yay.config
+  if ! diff -r "$yay_config" "$yay_config_back" &>/dev/null; then
+    logInfo 1 "Yay.config"
+    cp -r "$yay_config" "$yay_config_back"
+  fi
+
+  # rust.config
+  if ! diff -r "$rust_config" "$rust_config_back" &>/dev/null; then
+    logInfo 1 "Rust.config"
+    cp -r "$rust_config" "$rust_config_back"
+  fi
+
+  # neofetch.config
+  if ! diff -r "$neofetch_config" "$neofetch_config_back" &>/dev/null; then
+    logInfo 1 "Neofetch.config"
+    cp -r "$neofetch_config" "$neofetch_config_back"
+  fi
+
+  # Templates
+  if ! diff -r "$templates_file" "$templates_file_back/Templates" &>/dev/null; then
+    logInfo 1 "Templates"
+    cp -r "$templates_file" "$templates_file_back"
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+checkUser "root"
+
+TEMP=$(getopt --options ":s:hv" --longoptions "sync:,help,version" -n "backup" -- "$@")
+eval set -- "$TEMP"
+
+if [[ ${#@} -lt 2 ]]; then
+  helpInfo
+  exit $err_param
+else
+  while true; do
+    case $1 in
+    -s | --sync)
+      case $2 in
+      all)
+        echo -e "正在进行全量备份...\n"
+
+        updateCache
+
+        echo -e "检查 \e[1;34;47mboot\e[0m 系列"
+        backupBootConfig
+        echo -e "检查 \e[1;34;47metc\e[0m 系列"
+        backupEtcConfig
+        echo -e "检查 \e[1;34;47musr\e[0m 系列"
+        backupUsrConfig
+        echo -e "检查 \e[1;34;47muser\e[0m 系列"
+        backupUserConfig
+        echo -e "检查 \e[1;34;47mPackage\e[0m 系列"
+        backupPackage
+        echo -e "检查 \e[1;34;47mService\e[0m 系列"
+        backupService
+        echo -e "检查 \e[1;34;47m$USER-Group\e[0m 系列"
+        backupID
+        echo -e "检查 \e[1;34;47mManual\e[0m 系列"
+        backupManual
+
+        finishInfo
+        ;;
+      boot)
+        echo -e "检查 \e[1;34;47mboot\e[0m 系列"
+        backupBootConfig
+
+        finishInfo
+        ;;
+      etc)
+        echo -e "检查 \e[1;34;47metc\e[0m 系列"
+        backupEtcConfig
+
+        finishInfo
+        ;;
+      usr)
+        echo -e "检查 \e[1;34;47musr\e[0m 系列"
+        backupUsrConfig
+
+        finishInfo
+        ;;
+      user)
+        echo -e "检查 \e[1;34;47muser\e[0m 系列"
+        backupUserConfig
+
+        finishInfo
+        ;;
+      pkg)
+        echo -e "检查 \e[1;34;47mPackage\e[0m 系列"
+        updateCache
+        backupPackage
+
+        finishInfo
+        ;;
+      service)
+        echo -e "检查 \e[1;34;47mService\e[0m 系列"
+        updateCache
+        backupService
+
+        finishInfo
+        ;;
+      id)
+        echo -e "检查 \e[34;47m$USER-Group\e[0m 系列"
+        updateCache
+        backupID
+
+        finishInfo
+        ;;
+      manual)
+        echo -e "检查 \e[1;34;47mManual\e[0m 系列"
+        updateCache
+        backupManual
+
+        finishInfo
+        ;;
+      *)
+        echo -e "\n\e[31m[✘]\e[0m 未知的备份内容"
+        exit $err_unknown
+        ;;
+      esac
+      ;;
+    -h | --help)
+      helpInfo
+      exit $normal
+      ;;
+    -v | --version)
+      versionInfo
+      exit $normal
+      ;;
+    --)
+      shift 1
+      break
+      ;;
+    *)
+      helpInfo
+      exit $err_unknown
+      ;;
+    esac
+  done
+fi

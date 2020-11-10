@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: mylock
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:22:51
+
+Description: 锁屏程序
+
+Attentions:
+- 十六进制值：FF   F2  E6  D9  CC  BF  B3  A6  99  8C  80  73  66  59  4D  40  33  26  1A  0D  00
+- 不透明度值：100  95  90  85  80  75  70  65  60  55  50  45  40  35  30  25  20  15  10  5   0
+
+Depends:
+- i3lock-color
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+# color variable
+readonly color_time='#000000BF'         # 黑色     75%不透明度
+readonly color_date='#000000B3'         # 黑色     70%不透明度
+readonly color_key_layout='#00000080'   # 黑色     50%不透明度
+readonly color_inside='#0000001A'       # 黑色     10%不透明度
+readonly color_line='#FFFFFF00'         # 纯白     0%不透明度
+readonly color_inside_ver='#FFFAF099'   # 白色     60%不透明度
+readonly color_inside_wrong='#FFF0F580' # 紫罗兰红 50%不透明度
+readonly color_ring='#C0C0C0FF'         # 银白色   100%不透明度
+readonly color_separator='#00BFFFFF'    # 深天蓝   100%不透明度
+readonly color_ring_ver='#FFFFFFFF'     # 纯白     100%不透明度
+readonly color_ring_wrong='#00000033'   # 黑色     20%不透明度
+readonly color_keyhl='#696969FF'        # 暗灰色   100%不透明度
+readonly color_bshl='#87CEFAFF'         # 淡蓝色   100%不透明度
+readonly color_verif='#40E0D0FF'        # 黑色     100%不透明度
+readonly color_wrong='#FF0000FF'        # 纯红     100%不透明度
+# path variable
+readonly image_path="$HOME/Pictures/Wallpapers"
+# time variable
+readonly time_str='%H:%M:%S'
+readonly date_str='%Y.%m.%d %A'
+# ring variable
+readonly screen=0
+readonly keylayout=0
+readonly veriftext='正在解锁'
+readonly wrongtext='密码错误'
+readonly noinputtext='输入为空'
+readonly locktext='已锁屏'
+readonly lockfailedtext='锁屏失败'
+readonly radius=90
+readonly ring_width=2.0
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+i3lock \
+  --clock \
+  --image="$image_path/$1" \
+  --screen="$screen" \
+  --timestr="$time_str" \
+  --datestr="$date_str" \
+  --keylayout="$keylayout" \
+  --timecolor=$color_time \
+  --datecolor=$color_date \
+  --layoutcolor=$color_key_layout \
+  --linecolor=$color_line \
+  --insidecolor=$color_inside \
+  --insidevercolor=$color_inside_ver \
+  --insidewrongcolor=$color_inside_wrong \
+  --ringcolor=$color_ring \
+  --ringvercolor=$color_ring_ver \
+  --ringwrongcolor=$color_ring_wrong \
+  --separatorcolor=$color_separator \
+  --keyhlcolor=$color_keyhl \
+  --bshlcolor=$color_bshl \
+  --verifcolor=$color_verif \
+  --wrongcolor=$color_wrong \
+  --veriftext="$veriftext" \
+  --wrongtext="$wrongtext" \
+  --noinputtext="$noinputtext" \
+  --locktext="$locktext" \
+  --lockfailedtext="$lockfailedtext" \
+  --radius="$radius" \
+  --ring-width="$ring_width" \
+  --ignore-empty-password \
+  --show-failed-attempts

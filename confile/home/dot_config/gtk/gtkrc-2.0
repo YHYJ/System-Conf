@@ -1,0 +1,14 @@
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+include "/usr/share/themes/Numix-Frost-Light/gtk-2.0/gtkrc"
+
+style "user-font" {
+	font_name = "YaHei Monaco Hybird Regular 10"
+}
+
+widget_class "*" style "user-font"
+
+gtk-font-name="YaHei Monaco Hybird Regular 10"
+
+include "/home/yj/.gtkrc.mine"
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT

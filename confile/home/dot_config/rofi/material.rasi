@@ -1,0 +1,126 @@
+@import "colors.rasi"
+
+* {
+    background-color: @transparent;
+
+    spacing: 0;
+}
+
+/********* rofi窗口 *********/
+
+window {    /* 针对整个rofi窗口的配置 */
+    fullscreen: false;
+    transparency: "real";
+    background-color: @ocean-grey;
+}
+
+mainbox {   /* 针对主窗口的配置 */
+    children: [inputbar, message, listview];
+    spacing: 16px;          /* 子窗口之间边距 */
+    padding: 16px 9px;      /* 内部边距（上下 左右） */
+    border: 0px;            /* 外边框尺寸 */
+    border-color: @blue-a1; /* 外边框颜色 */
+}
+
+/********* 输入窗口 *********/
+
+inputbar {  /* 输入窗口主体配置 */
+    padding: 0px 9px;      /* 内部边距（上下 左右） */
+    children: [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {    /* 输入窗口提示符配置 */
+    font: "FontAwesome 13";
+    text-color: @blue-grey-6;    /* 提示符颜色 */
+}
+
+textbox-prompt-colon {  /* 输入窗口分隔符配置 */
+    expand: false;
+    str: ":";
+    margin: 2px 6px 2px 0px;     /* 四方边距（上 右 下 左） */
+    text-color: @blue-grey-6;    /* 分隔符颜色 */
+}
+
+entry {     /* 输入窗口光标配置 */
+    margin: 2px 6px 2px 0px;     /* 四方边距（上 右 下 左） */
+    text-color: @white;
+}
+
+case-indicator {
+    text-color: @amber-a1;
+}
+
+/********* 返回窗口 *********/
+
+message {   /* 针对calc模块的返回值窗口的配置 */
+    border: 1px 0px;
+    border-color: @amber-a2;
+}
+
+/********* 显示窗口 *********/
+
+listview {  /* 针对显示窗口的配置 */
+    lines: 9;                   /* 显示的行数 */
+    columns: 1;                 /* 每行列数 */
+    scrollbar: false;           /* 滚动条 */
+    margin: 0px 30px 0px 30px; /* 四方边距（上 右 下 左） */
+}
+
+/********* 侧边栏 *********/
+
+sidebar {   /* 针对侧边栏的配置 */
+    border: 1px 0px;
+    border-color: @brown-6;
+}
+
+button, textbox {
+    background-color: @blue-grey-6;
+    text-color: @white;
+    padding: 5px;
+}
+
+button selected {
+    background-color: @blue-a1;
+}
+
+scrollbar { /* 针对滚动条的配置 */
+    background-color: @blue-grey-6;
+    handle-color: @blue-a1;
+    handle-width: 10px;
+    border: 0px 1px;
+    border-color: @blue-a1;
+    margin: 0px 0px 0px 0px;
+}
+
+/********* 窗口元素 *********/
+
+element {
+    padding: 4px;   /* 每行之间的间隔 */
+    highlight: bold underline;
+}
+
+element normal {
+    background-color: @transparent;
+}
+
+element selected {  /* 选中行的配置 */
+    background-color: @blue-a2;
+}
+
+element alternate { /* 行间差别的配置 */
+    /* background-color: @blue-grey-6; */
+}
+
+element normal normal, element selected normal, element alternate normal {
+    text-color: @white;
+}
+
+element normal urgent, element selected urgent, element alternate urgent {
+    text-color: @red-a4;
+}
+
+element normal active, element selected active, element alternate active {
+    text-color: @green-a4;
+}
+
+/* vim:ft=css

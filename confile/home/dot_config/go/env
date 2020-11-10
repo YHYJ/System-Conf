@@ -1,0 +1,8 @@
+GO111MODULE=auto
+GOBIN=/home/yj/.golang/bin
+GOCACHE=/home/yj/.cache/go-build
+GOENV=/home/yj/.config/go/env
+GOOS=linux
+GOPATH=/home/yj/.golang
+GOROOT=/usr/lib/go
+GOTOOLDIR=/usr/lib/go/pkg/tool/linux_amd64

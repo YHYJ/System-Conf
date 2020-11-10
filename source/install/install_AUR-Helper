@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: install_AUR-Helper
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 11:07:04
+
+Description: 安装AUR-Helper
+
+Attentions:
+- 默认安装yay
+- 简单的方法是添加archlinuxcn源直接用pacman安装
+
+Depends:
+- wget
+- tar
+- pacman
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly err_file=1         # 文件/路径类错误
+readonly err_permission=110 # 权限错误
+
+#------------------------- Parameter Variable
+# path variable
+readonly helper_name="yay"
+readonly helper_path="/usr/bin/$helper_name"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function askQuestion() {
+  while true; do
+    read -e -r -p "$1"
+    echo
+    if [[ "$REPLY" =~ ^[Yy] ]]; then
+      return 0
+    elif [[ "$REPLY" =~ ^[Nn] ]]; then
+      return 1
+    else
+      echo -e "应输入 Y/y 或 N/n."
+    fi
+  done
+}
+
+#------------------------- Feature Function
+function checkUser() {
+  if [[ $USER == "$1" ]]; then
+    echo -e "\n\\e[31m[✘]\\e[0m 当前用户是$1，拒绝执行！！！"
+    exit $err_permission
+  fi
+}
+
+function installPkg() {
+  url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
+  down_dir="$HOME/Downloads/"
+  cfile="${url##*/}"  # yay.tar.gz
+  file="${cfile%%.*}" # yay(type:dir)
+
+  if wget "$url" -O "$down_dir$cfile" &>/dev/null; then
+    echo
+    echo -e "\\e[32m安装包下载成功\\[0m"
+    cd "$down_dir" || exit $err_file
+    if tar -xzvf "$cfile" &>/dev/null; then
+      cd "$file" || exit $err_file
+      if makepkg -rsi; then
+        echo -e "\\e[32m$helper_name安装成功\\[0m"
+      fi
+    else
+      echo -e "\\e[31m解压失败\\[0m"
+    fi
+  else
+    echo -e "\\e[31m网络故障，下载失败\\[0m"
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+checkUser "root"
+
+if [[ -x "$helper_path" ]]; then
+  echo -e "$helper_name 已存在"
+else
+  if askQuestion "是否安装$helper_name？ [Y/n] "; then
+    installPkg
+  else
+    echo
+    echo -e "退出"
+    echo
+  fi
+fi

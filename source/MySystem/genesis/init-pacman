@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: init-pacman
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:34:04
+
+Description: 管理pacman的可信密匙清单
+
+Attentions:
+- 需要root权限
+
+Depends:
+- pacman
+!
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+pacman-key --init               # 确保密匙环已正确初始化
+pacman-key --populate archlinux # 从 (给定的) 密匙环中重新加载默认密匙

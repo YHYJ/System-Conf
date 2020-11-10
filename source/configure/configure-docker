@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: configure-docker
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-28 14:17:00
+
+Description: 配置Docker Root Dir
+
+Attentions:
+-
+
+Depends:
+-
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_file=1         # 文件/路径类错误
+readonly err_no_program=127 # 未找到命令
+
+#------------------------- Parameter Variable
+# path variable
+readonly dockerd_exec_file="/usr/bin/dockerd"
+readonly dockerd_confile="/etc/systemd/system/docker.service.d/override.conf"
+readonly docker_root="$HOME/Documents/MyDockeroot"
+# content variable
+readonly override_content="[Service]\nExecStart= \nExecStart=$dockerd_exec_file --data-root=$docker_root -H fd://"
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+if [[ ! -e $dockerd_confile ]]; then
+  if command -v $dockerd_exec_file &>/dev/null; then
+    echo -e "$override_content" >$dockerd_confile
+    echo -e "Docker Root Dir已配置为$docker_root"
+    echo -e "请重启docker服务"
+    exit $normal
+  else
+    echo -e "\n未安装docker"
+    exit $err_no_program
+  fi
+else
+  echo -e "dockerd配置文件$dockerd_confile已存在"
+  exit $err_file
+fi

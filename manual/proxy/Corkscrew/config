@@ -1,0 +1,2 @@
+Host 10.*       # 代理这个IP段
+ProxyCommand corkscrew 10.7.0.117 2379 %h %p

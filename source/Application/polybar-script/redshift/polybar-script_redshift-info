@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: polybar-script_redshift-info
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:25:28
+
+Description: 获取色温信息
+
+Attentions:
+-
+
+Depends:
+- grep
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+# language variable
+if [[ $LANG == 'zh_CN.UTF-8' ]]; then
+  color_temp='色温'
+else
+  color_temp='temp'
+fi
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+if [ "$(pgrep -x redshift)" ]; then
+  temp=$(redshift -p 2>/dev/null | grep "$color_temp" | cut -d ":" -f 2 | tr -dc "[:digit:]")
+
+  if [ -z "$temp" ]; then
+    echo "%{F#65737E}"
+  elif [ "$temp" -ge 5000 ]; then
+    echo "%{F#8FA1B3}"
+  elif [ "$temp" -ge 4000 ]; then
+    echo "%{F#EBCB8B}"
+  else
+    echo "%{F#D08770}"
+  fi
+fi

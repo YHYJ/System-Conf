@@ -1,0 +1,12 @@
+[Unit]
+Description=Shadowsocks-Go Server Service
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/shadowsocks-server -c /etc/shadowsocks-go/%i.json
+
+[Install]
+WantedBy=multi-user.target
+
+

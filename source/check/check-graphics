@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: check-graphics
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 11:02:13
+
+Description: 检查系统的显卡信息
+
+Attentions:
+-
+
+Depends:
+- xorg-xrandr
+- mesa-demos
+!
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+echo -e "\\e[35m显卡信息 ----\\e[0m\n"
+
+lspci -k | grep --color=auto -A 2 -E "(VGA|3D)"
+
+echo -e "\n\\e[33m已加载的显卡驱动:\\e[0m"
+xrandr --listproviders # 系统中已加载的显卡驱动程序
+
+echo -e "\n\\e[33m默认显卡:\\e[0m"
+glxinfo | grep "OpenGL renderer" # 查看默认显卡

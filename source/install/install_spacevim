@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: install_spacevim
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 11:10:22
+
+Description: 安装Space-Vim
+
+Attentions:
+-
+
+Depends:
+- git
+- make
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_file=1         # 文件/路径类错误
+readonly err_no_program=127 # 未找到命令
+
+#------------------------- Parameter Variable
+# path variable
+readonly spacevim_path="$HOME/.space-vim"
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+if [[ -d $spacevim_path ]]; then
+  echo -e "\nSpace-vim已存在，不执行任何操作\n\n"
+  exit $normal
+else
+  git clone https://github.com/liuchengxu/space-vim.git "$spacevim_path"
+  if [[ -x /usr/bin/vim ]]; then
+    cd "$spacevim_path" || exit $err_file
+    if make vim; then
+      echo -e "\nSpace-vim安装完成\n\n"
+    else
+      echo -e "\nSpace-vim安装失败\n\n"
+    fi
+  else
+    echo -e "\n可能未安装gvim/vim，退出\n\n"
+    exit $err_no_program
+  fi
+fi
+
+# vim:ft=sh

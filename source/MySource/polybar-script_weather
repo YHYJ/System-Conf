@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: polybar-script_weather
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2019-09-16 17:09:49
+
+Description: 获取天气信息
+
+Attentions:
+-
+
+Depends:
+- libnotify
+!
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+notify-send --urgency=low --app-name="Weather info" '天气预报' '正在查询...'
+notify-send --urgency=normal --app-name="Weather info" '今日天气' "$(curl 'wttr.in/?format=%l:+|++气温+%t++|++降水量+%p++|++湿度+%h')"

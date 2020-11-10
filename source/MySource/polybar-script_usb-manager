@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: polybar-script_usb-manager
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-08-13 17:57:11
+
+Description: 通过udisks2控制外接USB存储设备的挂载/卸载
+
+Attentions:
+-
+
+Depends:
+- udisks2
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=1.0
+readonly minor_version=20200824
+readonly rel_version=1
+
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="用于Polybar控制外接USB存储设备的挂载/卸载"
+# file variable
+readonly pid_file="/tmp/$name.pid"
+# time variable
+readonly time_out=1
+# dir variable
+readonly open_dir="/run/media/$USER"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e ""
+  echo -e "     --update          更新$name状态"
+  echo -e "     --mount           挂载USB存储设备"
+  echo -e "     --unmount         卸载USB存储设备"
+  echo -e ""
+  echo -e "     -h, --help        显示帮助信息"
+  echo -e "     -v, --version     显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+#------------------------- Feature Function
+function usb_update() {
+  pid=$(cat "$pid_file")
+
+  if [[ $pid != "" ]]; then
+    kill -10 "$pid"
+  fi
+}
+
+function usb_mount() {
+  devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
+
+  for device in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint == null) | .name'); do
+    # 自动挂载
+    mountpoint=$(udisksctl mount --no-user-interaction -b "$device")
+    mountpoint=$(echo "$mountpoint" | cut -d " " -f 4 | tr -d ".")
+  done
+  # 自动打开
+  xdg-open "$open_dir" &
+}
+
+function usb_unmount() {
+  devices=$(lsblk -Jplno NAME,TYPE,RM,MOUNTPOINT)
+
+  for mounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint != null) | .name'); do
+    # 自动卸载
+    udisksctl unmount --no-user-interaction -b "$mounted"
+    # 自动弹出
+    udisksctl power-off --no-user-interaction -b "$mounted"
+  done
+}
+
+function usb_print() {
+  # 实时显示USB设备状态
+  devices=$(lsblk -Jplno NAME,TYPE,RM,SIZE,MOUNTPOINT,VENDOR)
+  output=""
+  sep_unmounted=""
+  sep_mounted=""
+  counter=0
+
+  for unmounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint == null) | .name'); do
+    unmounted=$(echo "$unmounted" | tr -d "[:digit:]")
+    unmounted=$(echo "$devices" | jq -r '.blockdevices[] | select(.name == "'"$unmounted"'") | .vendor')
+    unmounted=$(echo "$unmounted" | tr -d ' ')
+
+    if [ $counter -eq 0 ]; then
+      space=""
+    else
+      space="   "
+    fi
+    counter=$((counter + 1))
+
+    output="$output$space$sep_unmounted $unmounted"
+  done
+
+  for mounted in $(echo "$devices" | jq -r '.blockdevices[] | select(.type == "part") | select(.rm == true) | select(.mountpoint != null) | .size'); do
+    if [ $counter -eq 0 ]; then
+      space=""
+    else
+      space="   "
+    fi
+    counter=$((counter + 1))
+
+    output="$output$space$sep_mounted $mounted"
+  done
+
+  echo "$output"
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+case $1 in
+--update)
+  usb_update
+  ;;
+--mount)
+  usb_mount
+  usb_update
+  ;;
+--unmount)
+  usb_unmount
+  usb_update
+  ;;
+-h | --help)
+  helpInfo
+  exit $normal
+  ;;
+-v | --version)
+  versionInfo
+  exit $normal
+  ;;
+*)
+  echo $$ >"$pid_file"
+
+  trap exit INT
+  trap "echo" USR1
+
+  while true; do
+    usb_print
+
+    sleep $time_out &
+    wait
+  done
+  ;;
+esac

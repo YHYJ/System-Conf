@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: configure-git
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 10:43:32
+
+Description: 配置git
+
+Attentions:
+- 根据系统的hostname自动配置user.name
+- 执行完成后自动将公钥复制到剪贴板
+
+Depends:
+- git
+- openssh
+- xsel
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly err_permission=110 # 权限错误
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function getEditor() {
+  if [[ -z $EDITOR ]]; then
+    # $EDITOR变量为空
+    if command -v vim &>/dev/null; then
+      editor="vim"
+      merge_tool="vimdiff"
+    else
+      editor="vi"
+      merge_tool="diff"
+    fi
+  elif [[ $EDITOR =~ "vim" ]];then
+    editor=$EDITOR
+    merge_tool="vimdiff"
+  else
+    editor=$EDITOR
+    merge_tool="diff"
+  fi
+}
+
+#------------------------- Feature Function
+function checkUser() {
+  if [[ $USER == "$1" ]]; then
+    echo -e "\n\\e[31m[✘]\\e[0m 当前用户是$1，拒绝执行！！！"
+    exit $err_permission
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+checkUser "root"
+getEditor
+
+git config --global user.name "$(hostname)"
+git config --global user.email "yj1516268@outlook.com"
+git config --global core.editor "$editor"
+git config --global core.autocrlf input
+git config --global merge.tool "$merge_tool"
+git config --global color.ui true
+git config --global pull.rebase false
+echo -e "git配置完成\n\n"
+
+ssh-keygen -t rsa -C "yj1516268@outlook.com"
+xsel <"$HOME/.ssh/id_rsa.pub" --clipboard --input
+echo -e "公钥已复制到粘贴板，请到https://github.com/settings/keys进行设置\n\n"

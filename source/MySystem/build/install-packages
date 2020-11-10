@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: install-packages
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:32:42
+
+Description: 批量安装packages
+
+Attentions:
+- 需要先添加archlinuxcn源
+
+Depends:
+- pacman
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+err_file=1     # 文件/路径类错误
+err_ctrl_c=130 # 接收到INT(Ctrl+C)指令
+
+#------------------------- Parameter Variable
+# path variable
+list_filename="$HOME/Documents/MyRepos/System-Conf/system-info/pacman-pkglist"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Feature Function
+function exitProgram() {
+  echo -e "Ctrl+C is captured, exit"
+  exit $err_ctrl_c
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+while true; do
+  trap 'exitProgram' INT # 捕获到INT(Ctrl+C)信号，程序退出
+
+  if [[ -s $list_filename ]]; then
+    packages=$(cat "$list_filename")
+    for package in $packages; do
+      pkexec pacman -S "$package"
+      echo -e "\n"
+    done
+  else
+    exit $err_file
+  fi
+done

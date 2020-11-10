@@ -1,0 +1,8 @@
+[Unit]
+Description=Polybar scripts - checkupdates
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/polybar-script_checkupdates --check

@@ -1,0 +1,23 @@
+configuration {
+    theme: "material";
+
+    width: 38;
+    display-run: " ";
+    display-drun: "  ";
+    display-window: "  ";
+    font: "MesloLGS NF Regular 12";
+
+    matching: "normal";
+    modi: "combi,run,calc,ssh";     /* 允许显示的模块 */
+    combi-modi: "window,drun";      /* combi模块显示的内容 */
+    drun-display-format: "{icon} {name} - {generic}";
+
+    sort: false;        /* 禁止排序 */
+    cycle: false;       /* 禁止循环 */
+    show-icons: true;
+    show-match: true;
+
+    terminal: "/usr/bin/terminator";
+}
+
+/* vim:ft=css

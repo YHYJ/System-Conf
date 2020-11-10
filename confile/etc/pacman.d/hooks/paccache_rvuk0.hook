@@ -1,0 +1,11 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = *
+
+[Action]
+Description = Deleting uninstalled packages...
+When = PostTransaction
+Exec = /usr/bin/paccache -rvuk0

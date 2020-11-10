@@ -1,0 +1,286 @@
+[global]
+    ### Display ###
+
+    # 通知信息应该出现在哪个显示器上
+    monitor = 0
+
+    # 通知的显示模式。可能的模式有：
+    #   mouse：跟随鼠标指针
+    #   keyboard：跟随具有键盘焦点的窗口
+    #   none：不跟随
+    #
+    # keyboard 模式需要一个窗口管理器，该窗管要定义了'_NET_ACTIVE_WINDOW'属性
+    #            —— 几乎所有的现代窗口管理器都具有该属性
+    #
+    # 如果设置为mouse或keyboard模式，则将忽略"monitor"选项
+    follow = mouse
+
+    # 通知窗口的形状，参数设置的格式为：
+    #   [{width}]x{height}[+/-{x}+/-{y}]
+    # 高度'height'代表能显示的通知的总数，其他参数的单位是像素
+    #
+    # 如果省略了'width'但给出了'height'为("-geometry x2")，则通知窗口将在整个屏
+    # 幕上扩展（类似于dmune）。如果'width'值为0，则窗口将扩展到显示的最长信息。
+    # 原点为屏幕右上角，x正半轴往右，y正半轴往下
+    # 'width'可以为负，这样实际宽度是屏幕宽度减去在'-geometry'选项中定义的宽度
+    geometry = "368x6-3+36"
+
+    # 显示当前隐藏了多少条通知（由于"geometry"限制）
+    indicate_hidden = yes
+
+    # 如果通知的宽度小于'width'是否缩小窗口。如果'width'为0，则忽略该选项
+    shrink = no
+
+    # 窗口透明度，范围为0~100
+    # 仅当已安装X合成器时该选项生效
+    transparency = 30
+
+    # 一个通知的高度，如果小于字体高度+边距之和，则升高到字体高度+边距之和
+    notification_height = 0
+
+    # 在两个通知之间画一条分分隔线（单位像素），设置为0则禁用
+    separator_height = 3
+
+    # 分隔线的颜色：
+    #  auto：适应背景
+    #  foreground：使用与前景相同的颜色
+    #  frame：使用与边框相同的颜色
+    #  其他所有颜色都将解释为X颜色
+    separator_color = auto
+
+    # 通知文本和分割线之间的间距
+    padding = 8
+
+    # 水平间距
+    horizontal_padding = 8
+
+    # 通知窗口周围边框的宽度，设置为0禁用
+    frame_width = 0
+
+    # 通知窗口周围边框的颜色
+    frame_color = "#000000"
+
+    # 按紧急程度对通知进行排序
+    sort = yes
+
+    # 如果用户闲置时间超过该设定值，则不要自动清除通知，设置为0禁用
+    # 临时通知会忽略此设置
+    idle_threshold = 120
+
+    ### Text ###
+
+    # 字体
+    font = Monaco 11
+
+    # 行间距，如果低于字体高度，则会升高到字体高度
+    line_height = 3
+
+    # 可能的值为：
+    #   full：在通知中允许一小部分html标记
+    #       <b>bold</b>
+    #       <i>italic</i>
+    #       <s>strikethrough</s>
+    #       <u>underline</u>
+    #   完整参看文档参见：
+    #       http://developer.gnome.org/pango/stable/PangoMarkupFormat.html
+    #
+    #   strip：兼容选项
+    #
+    #   no：禁用标记解析，通知信息将被视为纯文本
+    #
+    # 无论设置为哪个值，都会解析"format"选项中的标记
+    markup = full
+
+    # 通知内容的格式，可能的值有：
+    #   %a  软件名
+    #   %s  摘要
+    #   %b  内容
+    #   %i  图标名（包括其路径）
+    #   %I  图标名（不包括其路径）
+    #   %p  设置为（[0%]到[100%]）或不设置则为进度值
+    #   %n  设置为没有任何额外字符则为进度值
+    #   %%  %
+    # 允许"markup"
+    format = "<big>%a: %s</big>\n<small>%b</small>"
+
+    # 通知文本的对齐方式，可能的值为：left、center、right
+    alignment = left
+
+    # 如果通知已经驻留了该设定值（单位为秒）的时长，则显示通知的驻留时间
+    # 设置为-1则禁用
+    show_age_threshold = 30
+
+    # 如果通知文本不适应"geometry"定义的窗口形状，将通知分为多行
+    word_wrap = yes
+
+    # 当"word_wrap"设置为no时，指定每行开始省略的位置，可能的值为：
+    #   start
+    #   middle
+    #   end
+    ellipsize = middle
+
+    # 忽略通知文本中的换行符'\n'
+    ignore_newline = no
+
+    # 合并具有相同内容的多个通知
+    stack_duplicates = true
+
+    # 隐藏内容相同的合并通知的计数
+    hide_duplicate_count = false
+
+    # 显示URL(U)和action(A)的指示器
+    show_indicators = yes
+
+    ### Icons ###
+
+    # 是否对齐图标，可能的值为：left、right、off
+    icon_position =left
+
+    # 将较大的图标缩小到此大小，设置为0以禁用
+    max_icon_size = 32
+
+    # 图标的默认路径
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
+    ### History ###
+
+    # 从历史记录中弹出的通知允许集合和超时
+    sticky_history = yes
+
+    # 保留在历史记录中的最大通知数量
+    history_length = 20
+
+    ### Misc/Advanced ###
+
+    # dmenu路径
+    dmenu = /usr/bin/dmenu -p dunst:
+
+    # 用于在上下文菜单中打开URL的浏览器
+    browser = /usr/bin/chromium -new-tab
+
+    # 始终运行规则定义的脚本，即使通知被禁止
+    always_run_script = true
+
+    # 定义dunst生成的窗口的标题
+    title = Dunst
+
+    # 定义dunst生成的窗口的类
+    class = Dunst
+
+    # 在启动时打印通知，主要用于错误检测
+    startup_notification = true
+
+    ### Legacy
+
+    # 使用Xinerama扩展而不是RandR来支持多显示器
+    # 提供此设置是为了与不支持RandR的较早的nVidia驱动程序兼容，强烈建议不要在
+    # 支持RandR的系统上使用它
+    #
+    # 通过启用此设置，dusts将无法检测到显示器是何时连接或断开的，如果屏幕布局发
+    # 生变化，这可能会破坏焦点跟随模式
+    force_xinerama = false
+
+# 实验功能，可能无法正常工作
+# 不要期望它们在各个发行版之间具有一致的行为
+[experimental]
+    # 计算每个显示器的DPI
+    # 如果启用此设置，则Xft.dpi将被忽略，而dunst将尝试使用分辨率和物理尺寸为每个
+    # 监视器计算适当的DPI，在有多个不同DPI的屏幕时可能很有用
+    per_monitor_dpi = false
+
+[shortcuts]
+
+    # 快捷方式指定为[modifier+][modifier+]...key
+ A   # 可用的修饰符是ctrl，mod1(Alt)，mod2，mod3和mod4(Windows)
+
+    # 关闭最新通知
+    close = mod1+space
+
+    # 关闭所有通知
+    close_all = mod1+shift+space
+
+    # 重新显示最后一条通知
+    # 在美式键盘布局上，grave通常在'TAB'键的上方'1'键的左侧
+    history = mod1+grave
+
+    # 上下文菜单
+    context = mod1+shift+period
+
+[urgency_low]
+    # 必须在引号中定义颜色，否则'#'及其后的内容将被视为注释
+    background = "#000000"
+    foreground = "#FFFFFF"
+    timeout = 6
+    # 紧急程度较低的通知图标，取消注释即可启用
+    #icon = /path/to/icon
+
+[urgency_normal]
+    background = "#FFFFFF"
+    foreground = "#000000"
+    timeout = 10
+    # 紧急程度正常的通知图标，取消注释即可启用
+    #icon = /path/to/icon
+
+[urgency_critical]
+    background = "#FF0000"
+    foreground = "#FFFFFF"
+    frame_color = "#FF0000"
+    timeout = 0
+    # 紧急情况的通知图标，取消注释即可启用
+    #icon = /path/to/icon
+
+# Every section that isn't one of the above is interpreted as a rules to
+# override settings for certain messages.
+# Messages can be matched by "appname", "summary", "body", "icon", "category",
+# "msg_urgency" and you can override the "timeout", "urgency", "foreground",
+# "background", "new_icon" and "format".
+# Shell-like globbing will get expanded.
+
+# 脚本
+# 可以通过设置"scripts"选项来指定在规则匹配时运行的脚本
+# 脚本将如下调用：
+#   script appname summary body icon urgency
+# 紧急度可以是'LOW'、'NORMAL'或'CRITICAL'
+#
+# 注意：如果不想显示通知，请将"format"设置为""
+# 注意：在终端中运行 dunst -print 可能会有所帮助，以便找到规则的合适选项
+
+#[espeak]
+#    summary = "*"
+#    script = dunst_espeak.sh
+
+#[script-test]
+#    summary = "*script*"
+#    script = dunst_test.sh
+
+#[ignore]
+#    # This notification will not be displayed
+#    summary = "foobar"
+#    format = ""
+
+#[history-ignore]
+#    # This notification will not be saved in history
+#    summary = "foobar"
+#    history_ignore = yes
+
+#[signed_on]
+#    appname = Pidgin
+#    summary = "*signed on*"
+#    urgency = low
+#
+#[signed_off]
+#    appname = Pidgin
+#    summary = *signed off*
+#    urgency = low
+#
+#[says]
+#    appname = Pidgin
+#    summary = *says*
+#    urgency = critical
+#
+#[twitter]
+#    appname = Pidgin
+#    summary = *twitter.com*
+#    urgency = normal
+#
+# vim: ft=cfg

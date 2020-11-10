@@ -1,0 +1,88 @@
+[global_config]
+  dbus = False
+  borderless = True
+  tab_position = hidden
+  scroll_tabbar = True
+  homogeneous_tabbar = False
+  use_custom_url_handler = True
+  custom_url_handler = $BROWSER
+  title_hide_sizetext = True
+  inactive_color_offset = 0.5
+  enabled_plugins = TerminalShot, ActivityWatch, InactivityWatch, CustomCommandsMenu
+  suppress_multiple_term_dialog = True
+  title_use_system_font = False
+  title_font = MesloLGS NF 14
+[keybindings]
+  zoom_in = <Primary>equal
+  zoom_out = <Primary>minus
+  new_tab = <Primary><Shift>space
+  go_next = None
+  go_prev = None
+  rotate_cw = None
+  rotate_ccw = None
+  split_horiz = <Primary><Shift>h
+  split_vert = <Primary><Shift>j
+  close_term = <Primary><Alt>q
+  copy = <Primary><Shift>c
+  paste = <Primary><Shift>v
+  toggle_scrollbar = None
+  search = None
+  page_up = Page_Up
+  page_down = Page_Down
+  close_window = <Alt>F4
+  resize_up = None
+  resize_down = None
+  resize_left = None
+  resize_right = None
+  move_tab_right = None
+  move_tab_left = None
+  toggle_zoom = None
+  scaled_zoom = None
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
+  switch_to_tab_10 = <Alt>0
+  hide_window = None
+  group_all = None
+  ungroup_all = None
+  group_tab = None
+  ungroup_tab = None
+  new_terminator = <Primary>i
+  broadcast_off = None
+  broadcast_group = None
+  broadcast_all = None
+  insert_number = None
+  insert_padded = None
+  edit_window_title = <Primary><Alt>n
+  edit_tab_title = None
+  edit_terminal_title = None
+  help = <Primary>h
+[profiles]
+  [[default]]
+    icon_bell = False
+    background_type = transparent
+    cursor_shape = ibeam
+    cursor_color = "#aaaaaa"
+    font = MesloLGS NF 14
+    foreground_color = "#3af4d5"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    palette = "#444444:#ff0054:#b1d630:#9d895e:#67bee3:#b576bc:#569a9f:#ededed:#777777:#d65e75:#baffaa:#ece1c8:#9fd3e5:#deb3df:#b6e0e5:#ffffff"
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+[plugins]

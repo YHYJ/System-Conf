@@ -1,0 +1,11 @@
+[server]
+    addr = 'imap.example.com'
+    port = 993
+
+[user]
+    name = 'User Name'
+    password = 'Password'
+
+[mail]
+    mailbox = 'INBOX'   # 收件箱
+    criteria = 'UNSEEN' # 未读邮件（只能是英文字符串）

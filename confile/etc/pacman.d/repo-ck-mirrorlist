@@ -1,0 +1,5 @@
+##
+## Linux-ck kernal community repository mirrorlist
+##
+
+Server = http://repo-ck.com/$arch

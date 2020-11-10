@@ -1,0 +1,10 @@
+[Unit]
+Description=Background application to intercept and action libinput gestures from touchpad
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/libinput-gestures
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

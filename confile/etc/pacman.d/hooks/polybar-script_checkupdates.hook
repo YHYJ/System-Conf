@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = *
+
+[Action]
+Description = Refreshing Polybar-script temporary file...
+When = PostTransaction
+Exec = /usr/local/bin/polybar-script_checkupdates --empty

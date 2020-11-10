@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: check-Arch-pacman_useless_file
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 10:59:42
+
+Description: 检查pacman数据库之外的文件
+
+Attentions:
+- 这些文件通常是第三方程序以普通方式(./configure;make;make install)安装的
+
+Depends:
+- pacman
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+readonly tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
+readonly db=$tmp/db
+readonly fs=$tmp/fs
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+mkdir "$tmp"
+trap 'rm -rf "$tmp"' EXIT
+
+pacman -Qlq | sort -u >"$db"
+
+find /bin /etc /lib /sbin /usr \
+  ! -name lost+found \
+  \( -type d -printf '%p/\n' -o -print \) | sort >"$fs"
+
+comm -23 "$fs" "$db"

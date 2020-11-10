@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+<fontconfig>
+    <match target="font">
+
+        <!-- 抗锯齿 -->
+        <edit mode="assign" name="antialias">
+            <bool>true</bool>
+        </edit>
+
+        <!-- 亚像素渲染 -->
+        <edit mode="assign" name="rgba">
+            <const>rgb</const>
+        </edit>
+        <!-- 亚像素渲染:LCD过滤器 -->
+        <edit mode="assign" name="lcdfilter">
+            <const>lcddefault</const>
+        </edit>
+
+        <!-- 自动微调:BCI -->
+        <edit mode="assign" name="hinting">
+            <bool>true</bool>
+        </edit>
+        <!-- 自动微调:微调样式 -->
+        <edit mode="assign" name="hintstyle">
+            <const>hintfull</const>
+        </edit>
+        <!-- 自动微调:粗体字的自动微调 -->
+        <test name="weight" compare="more">
+            <const>medium</const>
+        </test>
+        <edit name="autohint" mode="assign">
+            <bool>true</bool>
+        </edit>
+
+    </match>
+</fontconfig>

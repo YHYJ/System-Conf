@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: install-ss_go-server
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-02-20 16:09:58
+
+Description: 在服务器安装ss server的go版本
+!
+
+wget https://github.com/shadowsocks/shadowsocks-go/releases/download/1.2.1/shadowsocks-server.tar.gz

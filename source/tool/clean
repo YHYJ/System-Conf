@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: clean
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-07-24 10:09:44
+
+Description: 清理编译器生成的垃圾文件
+
+Attentions:
+- 根据参数确定清理目标
+
+Depends:
+-
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=0.2
+readonly minor_version=20200730
+readonly rel_version=2
+
+#------------------------- Exit Code Variable
+readonly err_param=2 # 参数错误
+
+#------------------------- Parameter Variable
+# filename variable
+pyinstaller='build dist *.spec __pycache__'
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m用于清理编译器生成的垃圾文件\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     pyinstaller       清理pyinstaller编译生成的垃圾文件"
+  echo -e ""
+  echo -e "     -h, --help        显示帮助信息"
+  echo -e "     -v, --version     显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+function whichCompiler() {
+  # 编译类型：当参数不对的时候询问用户要清理的垃圾文件的正确
+  echo -e "\n你想清理哪个编译器留下的垃圾？"
+  echo -e "   - pyinstaller"
+}
+
+#------------------------- Feature Function
+function makeClean() {
+  # 垃圾文件清理
+  case $1 in
+  pyinstaller)   # 在此添加compiler名
+    rm -rf ${!1} # 不能加双引号；使用!引用间接变量
+    echo -e "\nFinished"
+    ;;
+  -h | --help)
+    helpInfo
+    ;;
+  -v | --version)
+    versionInfo
+    ;;
+  *)
+    whichCompiler
+    exit "$err_param"
+    ;;
+  esac
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+makeClean "$1"

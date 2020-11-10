@@ -1,0 +1,38 @@
+## Host-specific options
+# NanoPi
+Host root@NanoPi_R2S-LAN
+    HostName 192.168.100.200
+    Port 21402
+    User root
+    ConnectTimeout 10
+Host mabo@NanoPi_R2S-LAN
+    HostName 192.168.100.200
+    Port 21402
+    User mabo
+    ConnectTimeout 10
+Host root@NanoPi_R1-WAN
+    HostName 192.168.10.10
+    Port 22
+    User root
+    ConnectTimeout 10
+Host mabo@NanoPi_R1-WAN
+    HostName 192.168.10.10
+    Port 22
+    User mabo
+    ConnectTimeout 10
+Host root@NanoPi_R1-LAN
+    HostName 192.168.100.10
+    Port 22
+    User root
+    ConnectTimeout 10
+Host mabo@NanoPi_R1-LAN
+    HostName 192.168.100.10
+    Port 22
+    User mabo
+    ConnectTimeout 10
+# mabotech.com
+Host mabo@mabotech.com
+    HostName 47.104.30.3
+    Port 22
+    User mabo
+    ConnectTimeout 10

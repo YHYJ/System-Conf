@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: program-manager
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:19:32
+
+Description: 安装/更新我的程序到指定路径
+
+Attentions:
+- 安装位置：/usr/local/bin
+
+Depends:
+- diffutils/colordiff
+
+TODO:
+1. 找到替代通过文件通信的方法
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=3.1
+readonly minor_version=20201030
+readonly rel_version=2
+
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_permission=110 # 权限错误
+readonly err_unknown=255    # 未知错误
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="用于安装自定义程序文件"
+# path variable
+readonly username=$(id -nu "$PKEXEC_UID" 2>/dev/null || id -nu)
+readonly source_path="/home/$username/Documents/MyRepos/System-Conf/source/MySource"
+readonly target_path="/usr/local/bin"
+readonly confile="/home/$username/.config/myprogram/$name.conf"
+# list variable
+readonly source_programs=$(ls "$source_path")
+diff_programs=()
+# count variable
+update_num=0
+install_num=0
+uninstall_num=0
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     -d, --dir <string>     指定需要安装的程序文件的路径（尚未启用）"
+  echo -e ""
+  echo -e "     -c, --check            检查是否有更新"
+  echo -e "     -i, --install          执行程序安装操作"
+  echo -e "     -u, --uninstall        执行程序卸载操作（尚未启用）"
+  echo -e ""
+  echo -e "     -h, --help             显示帮助信息"
+  echo -e "     -v, --version          显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+function notifyInfo() {
+  if [[ $update_num -gt 0 ]] && [[ $install_num -gt 0 ]]; then
+    echo -e "\n\\e[35m[✔]\\e[0m $update_num个程序更新完成, $install_num个程序安装完成"
+  elif [[ $update_num -eq 0 ]] && [[ $install_num -eq 0 ]]; then
+    echo -e "\n\\e[35m[✔]\\e[0m 没有程序需要安装/更新"
+  elif [[ $update_num -gt 0 ]]; then
+    echo -e "\n\\e[35m[✔]\\e[0m $update_num个程序更新完成"
+  elif [[ $install_num -gt 0 ]]; then
+    echo -e "\n\\e[35m[✔]\\e[0m $install_num个程序安装完成"
+  elif [[ $uninstall_num -gt 0 ]]; then
+    echo -e "\n\\e[35m[✔]\\e[0m $install_num个程序卸载完成"
+  fi
+}
+
+#------------------------- Feature Function
+function checkUser() {
+  if [[ $USER == "$1" ]]; then
+    echo -e "\n\\e[31m[✘]\\e[0m 当前用户是$1，拒绝执行"
+    exit $err_permission
+  fi
+}
+
+function checkUpdate() {
+  # 检查可更新项，依次将其加入到数组
+  for program in $source_programs; do
+    if ! diff "$source_path/$program" "$target_path/$program" &>/dev/null; then
+      diff_programs[${#diff_programs[@]}]="$program"
+    fi
+  done
+  echo "${diff_programs[@]}" >"$confile"
+}
+
+function installOperation() {
+  # install/update
+  readonly programs=$(cat "$confile")
+  for program in ${programs[@]}; do # 不要理会这个报错，否则就真错了
+    if [[ -x $target_path/$program ]]; then
+      install --mode=755 --owner="$username" --group="$username" "$source_path/$program" "$target_path/$program"
+      echo -e "\\e[1;34m==>\\e[0m 正在更新 \\e[32m$program\\e[0m"
+      update_num=$((update_num + 1))
+    else
+      install --mode=755 --owner="$username" --group="$username" "$source_path/$program" "$target_path/$program"
+      echo -e "\\e[1;34m==>\\e[0m 正在安装 \\e[32m$program\\e[0m"
+      install_num=$((install_num + 1))
+    fi
+  done
+
+  notifyInfo
+}
+
+function uninstallOperation() {
+  echo "TODO"
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+case $1 in
+-c | --check)
+  checkUpdate
+  if [[ ${#diff_programs[@]} -gt 0 ]]; then
+    if ! diff "$source_path/$name" "$target_path/$name" &>/dev/null; then
+      pkexec "$source_path/$name" --install
+    else
+      pkexec "$target_path/$name" --install
+    fi
+  else
+    update_num=0
+    install_num=0
+    notifyInfo
+  fi
+  ;;
+-i | --install)
+  installOperation
+  ;;
+-u | --uninstall)
+  uninstallOperation
+  ;;
+-h | --help)
+  helpInfo
+  exit $normal
+  ;;
+-v | --version)
+  versionInfo
+  exit $normal
+  ;;
+*)
+  helpInfo
+  exit $err_unknown
+  ;;
+esac

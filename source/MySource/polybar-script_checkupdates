@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: polybar-script_checkupdates
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-05-31 00:00:00
+
+Description: 检查系统更新
+
+Attentions:
+- Polybar插件
+- 将更新信息写入tmp文件
+- Polybar进程解析tmp文件获取可更新软件包个数并显示
+- 可配合service和timer定时获取更新信息
+- 可配合alpm-hooks当pacman更新软件包时将tmp文件内容清空
+
+Depends:
+- pacman-contrib
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=1.0
+readonly minor_version=20200806
+readonly rel_version=1
+
+#------------------------- Exit Code Variable
+readonly normal=0        # 一切正常
+readonly err_fetch=48    # checkupdate错误
+readonly err_unknown=255 # 未知错误
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="用于Polybar自动检测软件包更新"
+# path variable
+readonly tmp_file="/tmp/$name.log"
+readonly check_tool="/usr/bin/checkupdates"
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     -c, --check       检测软件包更新"
+  echo -e "     -e, --empty       清空tmp文件内容"
+  echo -e ""
+  echo -e "     -h, --help        显示帮助信息"
+  echo -e "     -v, --version     显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+#------------------------- Feature Function
+function checkUpdate() {
+  if pgrep -f $check_tool &>/dev/null; then
+    exit $err_fetch
+  else
+    $check_tool >"$tmp_file"
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+case $1 in
+-c | --check) # 使用'--check'参数执行checkUpdate函数
+  checkUpdate
+  ;;
+-e | --empty) # 使用'--empty'参数将tmp文件内容清空
+  : >"$tmp_file"
+  ;;
+-h | --help)
+  helpInfo
+  exit $normal
+  ;;
+-v | --version)
+  versionInfo
+  exit $normal
+  ;;
+*)
+  exit $err_unknown
+  ;;
+esac

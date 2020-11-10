@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: configure-pip
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 10:55:34
+
+Description: 将pip源配置成豆瓣源
+
+Attentions:
+- 提高pip下载速度
+- 需要root权限
+
+Depends:
+-
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Exit Code Variable
+readonly normal=0           # 一切正常
+readonly err_file=1         # 文件/路径类错误
+readonly err_no_program=127 # 未找到命令
+
+#------------------------- Parameter Variable
+# path variable
+readonly pip_confile="/etc/pip.conf"
+# content variable
+readonly source_name='阿里'
+readonly index_url='http://mirrors.aliyun.com/pypi/simple'
+readonly trusted_host='mirrors.aliyun.com'
+readonly conf_content="[global]\nindex-url = $index_url\ntrusted-host = $trusted_host"
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+if [[ ! -e "$pip_confile" ]]; then
+  if command -v pip &>/dev/null; then
+    echo -e "$conf_content" >$pip_confile
+    echo -e "现在pip使用$source_name镜像源"
+    exit $normal
+  else
+    echo -e "\n未找到pip命令，请先安装pip"
+    exit $err_no_program
+  fi
+else
+  echo -e "pip源配置文件$pip_confile已存在"
+  exit $err_file
+fi

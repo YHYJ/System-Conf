@@ -1,0 +1,239 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: http-server
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:12:36
+
+Description: 开启一个临时的HTTP服务
+
+Attentions:
+- 可以指定路径
+  - 默认使用当前路径
+- 可以指定端口
+  - 默认端口是8080
+- 可以指定网络设备/IP
+  - 默认使用0.0.0.0
+
+Depends:
+- python3
+- net-tools
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Program Variable
+# program name
+readonly name=$(basename "$0")
+# program version
+readonly major_version=3.2
+readonly minor_version=20201030
+readonly rel_version=1
+
+#------------------------- Exit Code Variable
+readonly normal=0        # 一切正常
+readonly err_file=1      # 文件/路径类错误
+readonly err_param=2     # 参数错误
+readonly err_range=122   # 取值范围错误
+readonly err_unknown=255 # 未知错误
+
+#------------------------- Parameter Variable
+# description variable
+readonly desc="用于开启一个临时的HTTP服务"
+# file variable
+readonly conf_dir="$HOME/.config/myprogram"
+readonly confile="$conf_dir/$name.conf"
+# time variable
+readonly time_out=60
+# port variable
+readonly port_min=1024
+readonly port_max=65535
+# network variable
+readonly local_ip="127.0.0.1"
+readonly meta_ip="0.0.0.0"
+# default variable
+readonly default_dir=$PWD
+readonly default_ip=$meta_ip
+readonly default_port=8080
+# user choice variable
+your_choice=$default_ip # card or ip
+# service variable
+service_ip=$default_ip
+service_port=$default_port
+service_dir=$default_dir
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Info Function
+function helpInfo() {
+  echo -e ""
+  echo -e "\e[32m$name\e[0m\e[1m$desc\e[0m"
+  echo -e "--------------------------------------------------"
+  echo -e "Usage:"
+  echo -e ""
+  echo -e "     $name [OPTION]"
+  echo -e ""
+  echo -e "Options:"
+  echo -e "     -d, --dir <string>     服务开启的目录 (default=PWD)"
+  echo -e "     -p, --port <int>       服务使用的端口 (default=$default_port)"
+  echo -e "     -c, --card             交互式选择服务使用的网卡/IP (default=$default_ip)"
+  echo -e ""
+  echo -e "     -h, --help             显示帮助信息"
+  echo -e "     -v, --version          显示版本信息"
+}
+
+function versionInfo() {
+  echo -e "\e[1m$name\e[0m version (\e[1m$major_version-$minor_version.$rel_version\e[0m)"
+}
+
+function askQuestion() {
+  # 询问使用的网卡/IP，有默认值
+  read -e -t $time_out -r -p "$1"
+  echo
+
+  # 指定网卡
+  if [[ "$all_nic" =~ $REPLY ]]; then
+    your_choice=$REPLY
+  else
+    # 未给定参数，使用默认值
+    echo -e "\n\e[36m<info>\e[0m 网卡/IP设置错误，使用默认值 $default_ip\n"
+  fi
+}
+
+#------------------------- Feature Function
+function setConfile() {
+  echo -e "$meta_ip\n$local_ip" >"$confile"
+}
+
+function fileDetection() {
+  if [[ ! -f $confile ]]; then
+    mkdir -p "$conf_dir"
+  fi
+
+  setConfile
+  ls -l /sys/class/net/ | egrep -v 'virtual|total' | awk '{print $NF}' | awk -F/ '{print $NF}' | awk 'NR==1 {next} {print $1}' >>"$confile"
+  readonly all_nic=$(cat "$confile")
+}
+
+function getIP() {
+  case $1 in
+  "$meta_ip" | "$local_ip")
+    service_ip="$1"
+    ;;
+  *)
+    # 获取$1指定网卡的IP
+    service_ip=$(ifconfig "$1" | grep "inet " | awk '{print $2}')
+    if [[ -z $service_ip ]]; then
+      # 如果根据网卡名得到的IP为空
+      echo -e "\n\e[36m<info>\e[0m 指定网卡未启用，使用默认值 $default_ip\n"
+      service_ip=$default_ip
+    fi
+    ;;
+  esac
+}
+
+function getDir() {
+  # 解析路径参数，没有默认值
+  if [[ -d $1 ]]; then
+    # 路径参数正常
+    case $1 in
+    ./ | .)
+      service_dir="$PWD"
+      ;;
+    *)
+      service_dir="$1"
+      ;;
+    esac
+  elif [[ ! -d $1 ]]; then
+    # 路径参数错误
+    echo -e "\n\e[31m[✘]\e[0m 指定的路径不存在"
+    exit $err_file
+  else
+    echo -e "\n\e[31m[✘]\e[0m 未知的路径参数：$1"
+    exit $err_param
+  fi
+}
+
+function getPort() {
+  # 获取端口参数，有默认值
+  case $1 in
+  [0-9]*)
+    if [[ $port_min -le $1 ]] && [[ $1 -le $port_max ]]; then
+      service_port=$1
+    else
+      echo -e "\n\e[31m[✘]\e[0m 端口取值范围为[$port_min, $port_max]"
+      exit $err_range
+    fi
+    ;;
+  "")
+    echo -e "\n未指定端口号，使用默认端口($default_port)"
+    service_port=$default_port
+    ;;
+  *)
+    echo -e "\n\e[31m[✘]\e[0m 非法的端口参数 $1"
+    exit $err_param
+    ;;
+  esac
+}
+
+function startServer() {
+  # 开启服务
+  echo -e "-------------------------\n"
+  echo -e " -> 服务位置: $service_dir"
+  echo -e " -> 服务地址: $service_ip:$service_port"
+  echo -e "\n\e[35m[✔]\e[0m HTTP服务已开启"
+  python -m http.server --bind "$service_ip" --directory "$service_dir" "$service_port"
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+TEMP=$(getopt --options ":d:p:chv" --longoptions "dir:,port:,card,help,version" -n "backup" -- "$@")
+eval set -- "$TEMP"
+
+fileDetection
+
+if [[ ${#@} -lt 2 ]]; then
+  # 未给定参数，使用默认值
+  startServer
+else
+  while true; do
+    case $1 in
+    -d | --dir)
+      getDir "$2"
+      shift 2
+      ;;
+    -p | --port)
+      getPort "$2"
+      shift 2
+      ;;
+    -c | --card)
+      echo -e "本机可用网卡/IP有："
+      echo -e "\e[1;37m$all_nic\e[0m"
+      askQuestion "请指定网卡/IP，默认为$default_ip(等待$time_out秒)："
+      getIP "$your_choice"
+      shift 1
+      ;;
+    -h | --help)
+      helpInfo
+      exit $normal
+      ;;
+    -v | --version)
+      versionInfo
+      exit $normal
+      ;;
+    --)
+      shift 1
+      break
+      ;;
+    *)
+      helpInfo
+      exit $err_unknown
+      ;;
+    esac
+  done
+  startServer
+fi

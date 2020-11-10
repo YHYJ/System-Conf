@@ -1,0 +1,569 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+
+[colors]
+include-file = /home/yj/.config/polybar/colors
+
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+[settings]
+throttle-input-for = 30
+throttle-output = 5
+throttle-output-for = 10
+
+screenchange-reload = true
+
+
+[bar/mypolybar]
+monitor-exact = false
+bottom = false
+fixed-center = true
+enable-ipc = true
+dim-value = 1.0
+wm-name =
+locale = en_US.UTF-8
+separator =
+
+width = 100%
+height = 28
+offset-x = 0
+offset-y = 0
+radius = 3.0
+
+foreground = ${colors.grey-white}
+background = ${colors.transparent}
+
+line-size = 2
+line-color = ${colors.red}
+border-size = 1
+border-color = ${colors.transparent}
+
+padding-left = 0
+padding-right = 0
+
+module-margin = 1
+
+tray-position = right
+tray-detached = false
+tray-maxsize = 16
+tray-scale = 1.0
+tray-padding = 0
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+dpi = 96
+font-0 = "Fixed:pixelsize=11;3"
+font-1 = "Unifont:fontformat=truetype:size=8;3"
+font-2 = "Siji:pixelsize=11;3"
+font-3 = "Liberation Sans:fixed:pixelsize=12;3"
+font-4 = "Source Han Sans CN:pixelsize=12;3"
+font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
+font-6 = "Font Awesome 5 Brands:style=Regular:pixelsize=12;3"
+font-7 = "Font Awesome:pixelsize=10;3"
+font-8 = "Noto Color Emoji:pixelsize=16;3"
+font-9 = "Anonymous Pro:pixelsize=11;3"
+font-10 = "Icons:pixelsize=11;3"
+font-11 = "Weather Icons:style=Regular:size=12;1"
+
+modules-left = mytext uptime notify checkupdates trash mpd usb pulseaudio i3 title
+modules-center = backlight
+modules-right = keyboard mail github wlan eth memory cpu temperature date battery
+
+
+; --------------------------------------------------
+
+
+[module/usb]
+type = custom/script
+tail = true
+
+exec = /usr/local/bin/polybar-script_usb-manager
+click-left = /usr/local/bin/polybar-script_usb-manager --mount &
+click-right = /usr/local/bin/polybar-script_usb-manager --unmount &
+
+format = <label>
+format-padding = 1
+format-background = ${colors.yellow-green}
+
+
+[module/mail]
+;; 显示未读邮件
+type = custom/script
+interval = 30
+
+exec = /usr/local/bin/polybar-script_mail --count
+click-left = thunderbird &
+click-right = /usr/local/bin/polybar-script_mail --switch &
+
+format = <label>
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.light-green}
+format-underline = ${colors.light-green}
+
+
+[module/trash]
+;; 显示回收站信息
+type = custom/script
+interval = 1
+
+exec = /usr/local/bin/polybar-script_trash --number
+click-left = /usr/local/bin/polybar-script_trash --list &
+click-right = trash-empty &
+
+format = <label>
+format-padding = 1
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.silvery-white}
+format-background = ${colors.ocean-grey}
+
+
+[module/uptime]
+;; 显示开机信息
+type = custom/script
+interval = 60
+
+exec = /usr/local/bin/polybar-script_uptime-info
+click-left = notify-send --app-name='System info' '最近开机时间' "`uptime -s`" &
+click-right = notify-send --app-name='Login info' '当前登录用户' "`who -q`" &
+
+format = <label>
+format-padding = 1
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.grey-blue}
+format-background = ${colors.ocean-grey}
+
+
+[module/checkupdates]
+;; 检查系统更新
+type = custom/script
+interval = 2
+
+exec-if = [ -f /tmp/polybar-script_checkupdates.log ]
+exec = awk 'END{print NR}' /tmp/polybar-script_checkupdates.log
+click-left-if = [ -s /tmp/polybar-script_checkupdates.log ]
+click-left = notify-send --app-name='Updates info' 'List' "`cat /tmp/polybar-script_checkupdates.log`" &
+click-right = notify-send --app-name='Service info' 'Status' "`systemctl is-active polybar-checkupdates`" &
+
+format = <label>
+format-padding = 1
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.pink-purple}
+format-background = ${colors.ocean-grey}
+
+
+[module/mytext]
+;; 显示自定义文本
+type = custom/text
+
+click-left = notify-send --app-name='System info' 'Kernel' "`uname -sr`"
+click-right = /usr/local/bin/polybar-script_weather
+
+content = "YJ-Arch"
+content-padding = 1
+content-prefix = 
+content-prefix-padding = 1
+content-foreground = ${colors.silvery-white}
+content-background = ${colors.dark-grey}
+
+
+[module/notify]
+;; 显示通知信息
+type = custom/text
+
+click-left = xdotool key alt+grave
+click-right = xdotool key alt+shift+space
+
+content = 
+content-padding = 1
+content-foreground = ${colors.grey-orange}
+content-background = ${colors.ocean-grey}
+
+
+[module/github]
+;; 显示Github未读通知（兼有显示网络状态的效果）
+type = internal/github
+interval = 5
+empty-notifications = false
+
+token = ${file:/home/yj/.config/polybar-script/notifications.token}
+
+label = %notifications%
+
+format = <label>
+format-padding = 1
+format-prefix = 
+format-prefix-margin = 1
+
+
+[module/title]
+;; 显示当前活动窗口的名字
+type = internal/xwindow
+
+label = %title:0:10%
+label-maxlen = 10
+
+format = <label>
+format-padding = 1
+format-foreground = ${colors.white}
+
+
+[module/keyboard]
+;; 显示大小写锁定状态
+type = internal/xkeyboard
+blacklist-0 = scroll lock
+
+format = <label-indicator>
+format-spacing = 0
+
+label-indicator-on-capslock = %name%
+label-indicator-on-capslock-padding = 1
+label-indicator-on-capslock-foreground = ${colors.black}
+label-indicator-on-capslock-background = ${colors.purple}
+
+
+[module/i3]
+;; 显示工作区
+type = internal/i3
+index-sort = true
+enable-click = true
+pin-workspaces = true
+wrapping-scroll = false
+
+format = <label-state> <label-mode>
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.black}
+label-mode-background = ${colors.gold-enrod}
+
+; 聚焦活动的workspace
+label-focused = %name%
+label-focused-padding = 2
+label-focused-background = ${colors.grey}
+label-focused-underline = ${colors.gold-enrod}
+
+; 不聚焦非活动workspace
+label-unfocused = %name%
+label-unfocused-padding = 2
+
+; 显示未聚焦的活动的workspace
+label-visible = %name%
+label-visible-padding = ${self.label-focused-padding}
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+
+; workspace活动提示
+label-urgent = %name%
+label-urgent-padding = 2
+label-urgent-background = ${colors.dark-red}
+label-urgent-foreground = ${colors.cyan-blue}
+
+
+[module/mpd]
+;; C/S架构音频播放器mpd
+type = internal/mpd
+interval = 1
+
+host = 127.0.0.1
+port = 6600
+
+format-online = <toggle> <icon-prev> <icon-stop> <icon-next> | <label-song> | <icon-random> <icon-repeat> <label-time>
+format-paused = <toggle> <icon-prev> <icon-stop> <icon-next>
+format-stopped = <toggle> <icon-prev> <icon-stop> <icon-next>
+format-online-padding = 1
+format-online-background = ${colors.ocean-grey}
+
+icon-play = 
+icon-play-margin = 1
+icon-play-foreground = ${colors.grass-green}
+icon-pause = 
+icon-pause-margin = 1
+icon-pause-foreground = ${colors.grey-orange}
+icon-stop = 
+icon-stop-margin = 1
+icon-stop-foreground = ${colors.grey-red}
+icon-prev = 
+icon-prev-margin = 1
+icon-prev-foreground = ${colors.pink-purple}
+icon-next = 
+icon-next-margin = 1
+icon-next-foreground = ${colors.pink-purple}
+icon-repeat = 
+icon-repeat-margin = 0
+icon-random = 
+icon-random-margin = 0
+
+label-song = %title:0:4%
+label-song-maxlen = 4
+label-song-ellipsis = true
+
+toggle-on-foreground = ${colors.orange}
+toggle-off-foreground = ${colors.grey-white}
+
+bar-progress-width = 5
+bar-progress-indicator = |
+bar-progress-fill = ─
+bar-progress-empty = ─
+bar-progress-gradient = true
+bar-progress-foreground-0 = ${colors.orange}
+bar-progress-foreground-1 = ${colors.orange}
+bar-progress-foreground-2 = ${colors.orange}
+
+
+[module/backlight]
+;; 背光设置
+; 使用`ls -1 /sys/class/backlight`命令列出'card'
+type = internal/xbacklight
+card = intel_backlight
+enable-scroll = true
+
+; 以圆盘模式显示，文件里显示不了该图标
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+format = <bar>
+
+bar-width = 11
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 1
+bar-fill = ─
+bar-fill-font = 1
+bar-fill-foreground = ${colors.dark-purple}
+bar-empty = ─
+bar-empty-font = 1
+bar-empty-foreground = ${colors.white}
+
+
+[module/cpu]
+;; 显示CPU使用率
+type = internal/cpu
+interval = 1
+
+label = %percentage%%
+
+format = <ramp-load> <label>
+format-underline = ${colors.gold}
+
+ramp-load-0 = 
+ramp-load-0-foreground = ${colors.milk-yellow}
+ramp-load-1 = 
+ramp-load-1-foreground = ${colors.orange-yellow}
+ramp-load-2 = 
+ramp-load-2-foreground = ${colors.gold-enrod}
+ramp-load-3 = 
+ramp-load-3-foreground = ${colors.orange}
+
+
+[module/memory]
+;; 显示内存使用率
+type = internal/memory
+interval = 1
+
+label = %gb_used%
+
+format = <ramp-used> <label>
+format-underline = ${colors.sea-green}
+
+ramp-used-0 = 
+ramp-used-0-foreground = ${colors.grass-green}
+
+ramp-used-1 = 
+ramp-used-1-foreground = ${colors.yellow-green}
+
+ramp-used-2 = 
+ramp-used-2-foreground = ${colors.grey-green}
+
+ramp-used-3 = 
+ramp-used-3-foreground = ${colors.sea-green}
+
+
+[module/wlan]
+;; 显示WiFi连接状态
+type = internal/network
+interface = wlp3s0
+interval = 1
+ping-interval = 3
+accumulate-stats = false
+
+label-connected = %essid%  %upspeed:1:8%  %downspeed:1:8%
+label-connected-foreground = ${colors.white}
+format-connected = <label-connected> <ramp-signal>
+format-connected-underline = ${colors.deep-sky-blue}
+format-connected-prefix = 
+format-connected-prefix-padding=1
+format-connected-prefix-foreground = ${colors.deep-sky-blue}
+
+label-disconnected = 
+label-disconnected-foreground = ${colors.grey}
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.grey}
+
+ramp-signal-0 = 
+ramp-signal-0-foreground = ${colors.orange-yellow}
+ramp-signal-1 = 
+ramp-signal-1-foreground = ${colors.orange-yellow}
+ramp-signal-2 = 
+ramp-signal-2-foreground = ${colors.grey-orange}
+ramp-signal-3 = 
+ramp-signal-3-foreground = ${colors.grey-orange}
+ramp-signal-4 = 
+ramp-signal-4-foreground = ${colors.deep-sky-blue}
+ramp-signal-5 = 
+ramp-signal-6-foreground = ${colors.deep-sky-blue}
+
+
+[module/eth]
+;; 显示有线连接状态
+type = internal/network
+interface = enp0s20f0u1u2
+interval = 1
+ping-interval = 3
+accumulate-stats = true
+
+label-connected = %local_ip%  %upspeed:1:8%  %downspeed:1:8%
+label-connected-foreground = ${colors.white}
+label-disconnected = %ifname%
+label-disconnected-foreground = ${colors.ocean-grey}
+
+format-connected = <label-connected>
+format-connected-underline = ${colors.orange}
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.grey}
+
+
+[module/date]
+;; 显示时间
+type = internal/date
+interval = 1
+
+date = %a
+date-alt = %Y-%m-%d %A
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+label = %date% %time%
+
+format = <label>
+format-prefix = 
+format-prefix-padding-right = 1
+format-prefix-foreground = ${colors.light-purple}
+format-underline = ${colors.light-purple}
+
+
+[module/pulseaudio]
+;; 音频控制
+; 使用`pacmd list-sinks`命令并查找输出结果中的'name'字段来确定'sink'
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1f.3.analog-stereo
+interval = 5
+use-ui-max = true
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-0-foreground = ${colors.grey-orange}
+ramp-volume-1-foreground = ${colors.yellow-green}
+ramp-volume-2-foreground = ${colors.orange}
+
+label-muted = 
+format-muted = <label-muted>
+format-muted-foreground = ${colors.grey}
+format-volume = <ramp-volume> <label-volume>
+
+
+[module/battery]
+;; 电池监控
+; `ls -1 /sys/class/power_supply`命令列出'battery'和'adapter'
+type = internal/battery
+battery = BAT0
+adapter = ADP0
+full-at = 100
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.orange}
+
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-underline = ${colors.silvery-white}
+
+format-full-prefix = 
+format-full-prefix-foreground = ${colors.cyan-blue}
+format-full-underline = ${colors.cyan-blue}
+
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.orange}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-foreground = ${colors.silvery-white}
+animation-discharging-framerate = 750
+
+
+[module/temperature]
+;; 显示CPU温度
+type = internal/temperature
+interval = 1
+thermal-zone = 0
+base-temperature = 20
+warn-temperature = 75
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.grey-red}
+label-warn-background = ${colors.biubiubiu}
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-underline = ${colors.grey-blue}
+format-warn-underline = ${colors.red}
+
+ramp-0 = 
+ramp-0-foreground = ${colors.grey-blue}
+ramp-1 = 
+ramp-1-foreground = ${colors.grey-blue}
+ramp-2 = 
+ramp-2-foreground = ${colors.grass-green}
+ramp-3 = 
+ramp-3-foreground = ${colors.grass-green}
+ramp-4 = 
+ramp-4-foreground = ${colors.grey-orange}
+
+
+; vim:ft=dosini

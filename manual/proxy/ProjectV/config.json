@@ -1,0 +1,180 @@
+{
+    "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "protocol": "socks",
+            "listen": "127.0.0.1",
+            "port": 1060,
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "ip": "127.0.0.1",
+                "userLevel": 0
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": ["http", "tls"]
+            },
+            "tag": "socks-inbound"
+        },
+        {
+            "protocol": "http",
+            "listen": "127.0.0.1",
+            "port": 1080,
+            "settings": {
+                "timeout": 0,
+                "allowTransparent": false,
+                "userLevel": 0
+            },
+            "tag": "http-inbound"
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "vmess",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "<Server address>",
+                        "port": <Server port>,
+                        "users": [
+                            {
+                                "id": "<User ID>",
+                                "alterId": 0,
+                                "security": "auto",
+                                "level": 0
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none"
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": -1
+            },
+            "tag": "vmess"
+        },
+        {
+            "protocol": "shadowsocks",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "<Server address>",
+                        "port": <Server port>,
+                        "method": "<Encryption method>",
+                        "password": "<Password>",
+                        "ota": false,
+                        "level": 0
+                    }
+                ]
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": -1
+            },
+            "tag": "shadowsocks"
+        },
+        {
+            "protocol": "freedom",
+            "settings": {
+                "domainStrategy": "AsIs",
+                "userLevel": 0
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": -1
+            },
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            },
+            "tag": "blocked"
+        }
+    ],
+
+    "routing": {
+        "domainStrategy": "IPOnDemand",
+        "rules":[
+            {
+                // 根据域名屏蔽
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads",
+                    "domain:baidu.com"
+                ],
+                "outboundTag": "blocked"
+            },
+            {
+                // 内网域名直连
+                "type": "field",
+                "domain": ["geosite:cn"],
+                "outboundTag": "direct"
+            },
+            {
+                // 内网和私有IP（例如路由器）直连
+                "type": "field",
+                "ip": [
+                    "geoip:private",
+                    "geoip:cn"
+                ],
+                "outboundTag": "direct"
+            }
+        ]
+    },
+
+    "dns": {
+        "hosts": {
+            "domain:v2ray.com": "www.vicemc.net",
+            "domain:github.io": "pages.github.com"
+        },
+        "servers": [
+            "1.1.1.1",
+            {
+                "address": "114.114.114.114",
+                "port": 53,
+                "domains": [
+                    "geosite:cn"
+                ]
+            },
+            "8.8.8.8",
+            "localhost"
+        ]
+    },
+
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 6,
+                "connIdle": 300,
+                "uplinkOnly": 0,
+                "downlinkOnly": 0,
+                "statsUserUplink": false,
+                "statsUserDownlink": false,
+                "bufferSize": 10240
+            }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true,
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
+        }
+    },
+
+    "stats":{},
+
+    "other": {}
+}

@@ -1,0 +1,12 @@
+{
+    "server": ["<Server IP>"],
+    "server_port": <Server Port>,
+    "password": "<Password>",
+    "local_address": "127.0.0.1",
+    "local_port": 1080,
+    "timeout": 300,
+    "method": "aes-256-cfb",
+    "fast_open": false,
+    "prefer_ipv6": false,
+    "workers": 1
+}

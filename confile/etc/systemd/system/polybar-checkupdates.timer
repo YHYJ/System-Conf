@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily checkupdates
+
+[Timer]
+OnBootSec=10min
+OnUnitInactiveSec=2h
+AccuracySec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

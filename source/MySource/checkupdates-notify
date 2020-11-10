@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: checkupdates-notify
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:08:03
+
+Description: 检查系统是否需要更新并通知
+
+Attentions:
+-
+
+Depends:
+- libnotify
+- pacman-contrib
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+# program name
+readonly name=$(basename "$0")
+
+#------------------------- Parameter Variable
+# count variable
+readonly can_do=0
+# identify variable
+readonly pid=$(pgrep -f /usr/bin/checkupdates)
+
+####################################################################
+#+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Feature Function
+function checkUpdate() {
+  notify-send --urgency=low --app-name="$name" '系统更新' '正在检查系统更新...'
+  info=$(checkupdates | wc -l)
+
+  if [[ $info == 0 ]]; then
+    notify-send --urgency=low --app-name="$name" '无可用更新' "所有包都是最新的"
+  else
+    notify-send --urgency=normal --expire-time=0 --app-name="$name" '有可用更新' "$info 个包待更新"
+  fi
+}
+
+function onlyOne() {
+  if [[ $pid == '' ]]; then
+    can_do=0
+  else
+    can_do=1
+  fi
+}
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+onlyOne
+
+if [[ $can_do == 0 ]]; then
+  checkUpdate &
+else
+  echo -e "\\e[31m[✘]\\e[0m 其他 checkupdates(PID=$pid) 进程正在运行"
+fi

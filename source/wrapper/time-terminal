@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: time-terminal
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2020-04-27 13:54:36
+
+Description: 回放终端操作
+
+Attentions:
+- 文件存储位置："$HOME/Documents/AppCache/terminal-time/"
+
+Depends:
+- util-linux
+!
+
+####################################################################
+#+++++++++++++++++++++++++ Define Variable ++++++++++++++++++++++++#
+####################################################################
+#------------------------- Parameter Variable
+# path variable
+readonly timefile="$HOME/Documents/AppCache/terminal-time/Terminal-Time.time"
+readonly txtfile="$HOME/Documents/AppCache/terminal-time/Terminal-Time.txt"
+
+####################################################################
+#++++++++++++++++++++++++++++++ Main ++++++++++++++++++++++++++++++#
+####################################################################
+echo -e "\\e[1;34mBacktrack Start:\\e[0m"
+scriptreplay "$timefile" "$txtfile"
+echo -e "Backtrack end"
+echo -e "\n\\e[35mBacktrack Stop\\e[0m"
+script -t -a "$txtfile" 2>"$timefile"
