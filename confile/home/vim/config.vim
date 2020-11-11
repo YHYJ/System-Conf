@@ -672,7 +672,8 @@ let g:VimTodoListsDatesFormat = "%Y-%m-%d %H:%M"                                
 
 
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 8. Other设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
-">>>>>>>>>>>>>>>>>> TODO\FIXME\CHANGED\BUG\HACK\NOTE\INFO\IDEA的高亮
+">>>>>>>>>>>>>>>>>> TODO\FIXME\CHANGED\BUG\HACK\NOTE\INFO\IDEA\DEBUG\WARNING\ERROR\CRITICAL的高亮
 autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|BUG\|HACK\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|DEBUG\|WARNING\)')
+autocmd Syntax * call matchadd('Error', '\W\zs\(ERROR\|CRITICAL\)')
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 8. Other设置 End >>>>>>>>>>>>>>>>>>>>>>>>>>"
