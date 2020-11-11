@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='exa --color=auto'
+    alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
@@ -179,7 +179,6 @@ alias 2ipython='workon 2 && ipython'        # 一键开启env3及其ipython
 alias 3ipython='workon 3 && ipython'        # 一键开启env2及其ipython
 alias diff='colordiff'                      # diff着色
 alias lsb_release='lsb_release -a'          # 显示系统信息
-alias ipa='ip a'                            # IP信息
 alias todo='vim TODO.todo.md'               # 快速打开TODOList文件
 alias readme='vim README.md'                # 快速打开README文件
 # --使用指定命令打开指定后缀的文件
