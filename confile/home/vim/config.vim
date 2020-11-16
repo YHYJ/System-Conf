@@ -72,6 +72,8 @@ set go=                                                                         
 
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 2. 泛代码设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
 ">>>>>>>>>>>>>>>>>> 代码折叠
+" 折叠标识符列宽
+set foldcolumn=3
 " 折叠风格
 set foldmethod=indent
 " 所有折叠风格：indent  manual  expr  diff  syntax  marker
