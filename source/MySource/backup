@@ -27,7 +27,7 @@ Depends:
 readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
-readonly minor_version=20200810
+readonly minor_version=20201117
 readonly rel_version=1
 
 #------------------------- Exit Code Variable
@@ -205,9 +205,12 @@ readonly polybar_checkupdates_service="/etc/systemd/system/polybar-checkupdates.
 readonly polybar_checkupdates_service_back="$backup_path/confile/etc/systemd/system/polybar-checkupdates.service"
 readonly polybar_checkupdates_timer="/etc/systemd/system/polybar-checkupdates.timer"
 readonly polybar_checkupdates_timer_back="$backup_path/confile/etc/systemd/system/polybar-checkupdates.timer"
-# rofi
-readonly rofi_file="$dot_config_path/rofi"
-readonly rofi_file_back="$backup_path/confile/home/dot_config"
+# rofi.config
+readonly rofi_config="$dot_config_path/rofi"
+readonly rofi_config_back="$backup_path/confile/home/dot_config"
+# rofi.theme
+readonly rofi_theme="$dot_local_path/share/rofi/themes"
+readonly rofi_theme_back="$backup_path/confile/home/dot_local/share/rofi"
 # terminator
 readonly terminator_config="$dot_config_path/terminator/config"
 readonly terminator_config_back="$backup_path/confile/home/dot_config/terminator/config"
@@ -629,9 +632,15 @@ function backupUserConfig() {
   fi
 
   # rofi.config
-  if ! diff -r "$rofi_file" "$rofi_file_back/rofi" &>/dev/null; then
+  if ! diff -r "$rofi_config" "$rofi_config_back/rofi" &>/dev/null; then
     logInfo 1 "Rofi.config"
-    cp -r "$rofi_file" "$rofi_file_back"
+    cp -r "$rofi_config" "$rofi_config_back"
+  fi
+
+  # rofi.theme
+  if ! diff -r "$rofi_theme" "$rofi_config_back/themes" &>/dev/null; then
+    logInfo 1 "Rofi.theme"
+    cp -r "$rofi_theme" "$rofi_theme_back"
   fi
 
   # dtags
