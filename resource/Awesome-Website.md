@@ -28,4 +28,4 @@
 | [htop显示元素释义](https://peteris.rocks/blog/htop/)                                  |
 | [系统设计入门](https://github.com/donnemartin/system-design-primer)                   |
 | [Linux系统强化指南](https://github.com/trimstray/the-practical-linux-hardening-guide) |
-
+| [字体下载](https://www.nerdfonts.com/font-downloads)                                  |

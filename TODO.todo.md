@@ -1,4 +1,6 @@
 - [ ] ! 卸载ranger使用nnn（配置好它） (2020-11-11 19:54)
+- [ ] ! Blog - 不常用命令备忘录：`fc-cache -fv` - 刷新字体缓存 (2020-11-17 17:39)
+- [ ] ! 卸载gtk-chtheme换为lxappearance-gtk3 (2020-11-17 17:52)
 - [ ] 配置YCM： (2020-10-17 11:36)
   - [ ] https://ycm-wiki-zhcn.readthedocs.io/zh_CN/latest/official_doc/intro.html (2020-10-17 11:07)
   - [ ] https://zhuanlan.zhihu.com/p/33046090 (2020-10-17 11:37)
