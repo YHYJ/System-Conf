@@ -28,7 +28,7 @@ readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
 readonly minor_version=20201118
-readonly rel_version=1
+readonly rel_version=2
 
 #------------------------- Exit Code Variable
 readonly normal=0           # 一切正常
@@ -638,7 +638,7 @@ function backupUserConfig() {
   fi
 
   # rofi.theme
-  if ! diff -r "$rofi_theme" "$rofi_config_back/themes" &>/dev/null; then
+  if ! diff -r "$rofi_theme" "$rofi_theme_back/themes" &>/dev/null; then
     logInfo 1 "Rofi.theme"
     cp -r "$rofi_theme" "$rofi_theme_back"
   fi
