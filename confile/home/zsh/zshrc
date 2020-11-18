@@ -207,6 +207,8 @@ rehash_precmd() {
 }
 add-zsh-hook -Uz precmd rehash_precmd
 
+# --设置session之间共享history记录
+setopt share_history
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
