@@ -27,7 +27,7 @@ Depends:
 readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
-readonly minor_version=20201117
+readonly minor_version=20201118
 readonly rel_version=1
 
 #------------------------- Exit Code Variable
@@ -63,7 +63,7 @@ readonly boot_entries_back="$boot_path_back"
 
 ## etc -> /etc
 # makepkg
-readonly makepkg_config=/etc/makepkg.conf
+readonly makepkg_config="/etc/makepkg.conf"
 readonly makepkg_config_back="$backup_path/confile/etc/makepkg.conf"
 # docker
 readonly docker_daemon="/etc/docker/daemon.json"
@@ -152,8 +152,8 @@ readonly zsh_config="$HOME/.zshrc"
 readonly zsh_config_back="$backup_path/confile/home/zsh/zshrc"
 readonly zsh_env="$HOME/.zshenv"
 readonly zsh_env_back="$backup_path/confile/home/zsh/zshenv"
-readonly zsh_theme_p10k="$HOME"/.p10k.zsh
-readonly zsh_theme_p10k_back="$backup_path/confile/home/zsh/themes/p10k.zsh"
+readonly zsh_theme_p10k="$HOME/.p10k.zsh"
+readonly zsh_theme_p10k_back="$backup_path/confile/home/zsh/p10k.zsh"
 
 ## dot_config -> /home/$USER/.config
 # chromium
