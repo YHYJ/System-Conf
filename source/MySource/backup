@@ -28,7 +28,7 @@ readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
 readonly minor_version=20201118
-readonly rel_version=2
+readonly rel_version=3
 
 #------------------------- Exit Code Variable
 readonly normal=0           # 一切正常
@@ -182,9 +182,6 @@ readonly i3_config_back="$backup_path/confile/home/dot_config/i3/config"
 # neofetch
 readonly neofetch_config="$dot_config_path/neofetch/config.conf"
 readonly neofetch_config_back="$backup_path/confile/home/dot_config/neofetch/config.conf"
-# deepin-terminal
-readonly deepin_terminal_file="$dot_config_path/deepin/deepin-terminal"
-readonly deepin_terminal_file_back="$backup_path/confile/home/dot_config/deepin"
 # dunst
 readonly dunst_config="$dot_config_path/dunst/dunstrc"
 readonly dunst_config_back="$backup_path/confile/home/dot_config/dunst/dunstrc"
@@ -563,12 +560,6 @@ function backupUserConfig() {
   if ! diff -r "$vim_spacevim" "$vim_spacevim_back" &>/dev/null; then
     logInfo 1 "Vim.spacevim"
     cp -r "$vim_spacevim" "$vim_spacevim_back"
-  fi
-
-  # deepin-terminal.config
-  if ! diff -r "$deepin_terminal_file" "$deepin_terminal_file_back/deepin-terminal" &>/dev/null; then
-    logInfo 1 "Deepin-terminal.config"
-    cp -r "$deepin_terminal_file" "$deepin_terminal_file_back"
   fi
 
   # dunst.config
