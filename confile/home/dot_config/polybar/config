@@ -80,10 +80,10 @@ font-0 = "Source Han Sans CN: pixelsize=12; 3"
 font-1 = "Fixed: pixelsize=12; 3"
 font-2 = "Liberation Sans: fixed: pixelsize=12; 3"
 ;  图标字体
-font-3 = "Noto Color Emoji: pixelsize=12; 3"
-font-4 = "Font Awesome 5 Free: style=Solid: pixelsize=12; 3"
-font-5 = "Font Awesome 5 Brands: style=Regular: pixelsize=12; 3"
-font-6 = "Font Awesome: pixelsize=12; 3"
+font-3 = "Font Awesome 5 Free: style=Solid: pixelsize=12; 3"
+font-4 = "Font Awesome 5 Brands: style=Regular: pixelsize=12; 3"
+font-5 = "Font Awesome: pixelsize=12; 3"
+font-6 = "NotoEmoji Nerd Font: pixelsize=12; 3"
 font-7 = "Unifont: fontformat=truetype: size=12; 3"
 font-8 = "Anonymous Pro: pixelsize=12; 3"
 font-9 = "Icons: pixelsize=12; 3"
@@ -494,14 +494,14 @@ sink = alsa_output.pci-0000_00_1f.3.analog-stereo
 interval = 5
 use-ui-max = true
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-0 = "🔈"
+ramp-volume-1 = "🔉"
+ramp-volume-2 = "🔊"
 ramp-volume-0-foreground = ${colors.grey-orange}
 ramp-volume-1-foreground = ${colors.yellow-green}
 ramp-volume-2-foreground = ${colors.orange}
 
-label-muted = 
+label-muted = "🔇"
 format-muted = <label-muted>
 format-muted-foreground = ${colors.grey}
 format-volume = <ramp-volume> <label-volume>
