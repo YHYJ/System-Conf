@@ -86,6 +86,10 @@ font-9 = "Anonymous Pro:pixelsize=11;3"
 font-10 = "Icons:pixelsize=11;3"
 font-11 = "Weather Icons:style=Regular:size=12;1"
 
+
+; --------------------------------------------------
+
+
 modules-left = mytext uptime notify checkupdates trash mpd usb pulseaudio i3 title
 modules-center = backlight
 modules-right = keyboard mail github wlan eth memory cpu temperature date battery
