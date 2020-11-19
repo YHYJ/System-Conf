@@ -2,6 +2,11 @@
 - [ ] ! 软件包：
   - [ ] gtk-chtheme --> lxappearance-gtk3 (2020-11-17 17:52)
   - [ ] ttf-jetbrains-mono (2020-11-18 10:07)
+  - [ ] ttf-meslo-nerd-font-powerlevel10k （之前手动安装的可以通过字体管理器找到安装路径后手动删除） (2020-11-19 15:56)
+  - [ ] nerd-fonts-complete
+- [ ] ! 卸载了以下包，注意观察影响： (2020-11-19 15:37)
+  - [ ] awesome-terminal-fonts (2020-11-19 15:41)
+  - [ ] powerline-fonts (2020-11-19 15:41)
 - [ ] ! 考虑`/home/yj/.zshenv`的去留问题，它或许没用了 (2020-11-18 09:15)
 - [ ] 配置YCM： (2020-10-17 11:36)
   - [ ] https://ycm-wiki-zhcn.readthedocs.io/zh_CN/latest/official_doc/intro.html (2020-10-17 11:07)
@@ -17,7 +22,6 @@
   - [ ] 尝试使用go重建所有script (2020-07-31 14:15)
   - [ ] 把polybar-script_mail.py用golang重构 (2020-05-20 09:24)
   - [ ] 尝试把http-server的网卡选择替换为dialog -- 困难，dialog无法正常接收网卡信息 (2020-05-13 14:33)
-  - [ ] 完善各script的参数系统 (2020-07-31 11:29)
   - [ ] 为复杂脚本写completion (2020-08-07 22:41)
   - [ ] 更新脚本：根据UID来checkUser (2020-08-09 22:08)
   - [ ] bash脚本做卸载操作太麻烦，用go重构 (2020-08-09 23:11)
@@ -29,6 +33,7 @@
   - [X] 不再实时获取并拼接网卡名，而是把lo、127.0.0.1和0.0.0.0放入文件，并且查找实体网卡追加到该文件，然后读取文件作为网卡参数 (2020-07-13 20:01)
   - [X] ! 将install-myscript升级为program-manager：有安装/卸载功能 (2020-08-07 11:36)
   - [X] ! 将system-usb-udev重写为polybar-script_usb-udev (2020-06-19 09:30)
+  - [X] 完善各script的参数系统 (2020-07-31 11:29)
 - [ ] Python问题： (2020-07-17 17:19) (2020-08-12 14:22)
   - [ ] Python魔法方法：https://rszalski.github.io/magicmethods/ (2020-08-12 14:22)
   - [ ] Python多继承的顺序问题和None问题 (2020-06-23 20:17)
