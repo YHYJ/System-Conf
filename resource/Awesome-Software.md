@@ -19,6 +19,7 @@
 * [开发](#开发)
 * [浏览器](#浏览器)
 * [虚拟机](#虚拟机)
+* [字体](#字体)
 
 <!-- vim-markdown-toc -->
 
@@ -28,6 +29,7 @@ CLI：命令行工具
 GUI：图形界面
 Service：服务
 Library：库
+System：系统组件（包含字体）
 
 ---
 
@@ -174,3 +176,14 @@ Library：库
 | -------------------------- | ---------------------------------------------------------- | ------- | ------ |
 | virt-manager               | kvm虚拟机管理器                                            | GUI     | 必要   |
 | qemu-headless              | 没有GUI的QEMU                                              | CLI     | 必要   |
+
+## 字体
+
+> 在安装了nerd-fonts-complete字体的情况下awesome-terminal-fonts和powerline-fonts是非必要的
+
+| 包名                              | 描述                           | 属性   | 必要性 |
+| ---                               | ---                            | ---    | ---    |
+| nerd-fonts-complete               | 巨量字体补丁，包含图标         | System | 必要   |
+| ttf-meslo-nerd-font-powerlevel10k | 用于zsh主题powerlevel10k的字体 | System | 必要   |
+| awesome-terminal-fonts            | 用于Powerline的字体和图标      | System | 非必要 |
+| powerline-fonts                   | Powerline的字体补丁            | System | 非必要 |
