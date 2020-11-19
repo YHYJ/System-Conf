@@ -107,6 +107,7 @@ System：系统组件（包含字体）
 | compton-conf-git           | X合成器picom（原compton）配置工具                          | GUI     | 非必要 |
 | baidupcs-go-bin            | 百度网盘终端实用程序（Go版）                               | CLI     | 非必要 |
 | packetsender               | 网络实用程序，用于发送/接收TCP和UDP数据包                  | GUI     | 非必要 |
+| task                       | 命令行TODO管理器                                           | CLI     | 非必要 |
 
 ## 文件
 
