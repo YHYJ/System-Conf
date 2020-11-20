@@ -6,6 +6,7 @@
   - [ ] + ttf-meslo-nerd-font-powerlevel10k （之前手动安装的可以通过字体管理器找到安装路径后手动删除） (2020-11-19 15:56)
   - [ ] + nerd-fonts-complete (2020-11-19 16:46)
   - [ ] + papirus-icon-theme (2020-11-20 09:00)
+  - [ ] + mojave-gtk-theme-git (2020-11-20 09:20)
   - [ ] - lxappearance-gtk3 (2020-11-17 17:52)
   - [ ] - awesome-terminal-fonts (2020-11-19 15:41)
   - [ ] - powerline-fonts (2020-11-19 15:41)
