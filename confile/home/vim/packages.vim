@@ -1,6 +1,3 @@
-"vim-pythonsense快捷键可能和pymode冲突"
-"editorconfig-vim可能和自定义的冲突"
-
 ">>>EDIT & IDE<<<"
 Plug 'terryma/vim-multiple-cursors'     " 多行编辑
 Plug 'luochen1990/rainbow'              " 彩虹括号，提高代码阅读质量
