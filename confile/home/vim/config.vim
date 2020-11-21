@@ -31,6 +31,8 @@ set guiheadroom=0                                                               
 set scrolloff=999                                                               " 上下可视行数
 set sidescroll=1                                                                " 水平滚动的最小列数
 set sidescrolloff=1                                                             " 光标两侧最小列数
+" 退出Vim后回复Shell默认光标形状
+autocmd VimLeave * silent !echo -en '\e[5 q'
 set scrolljump=0                                                                " 禁止自动显示多行
 set cmdheight=1                                                                 " 命令行宽度
 set cursorline                                                                  " 突出显示当前行
