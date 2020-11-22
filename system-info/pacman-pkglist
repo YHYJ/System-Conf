@@ -13,7 +13,6 @@ autoconf
 autojump
 automake
 autopep8
-awesome-terminal-fonts
 axel
 baidupcs-go
 bandwhich
@@ -99,13 +98,11 @@ git
 git-lfs
 glibc
 gnome-disk-utility
-gnome-icon-theme
 gnome-keyring
 gnu-netcat
 go
 gpick
 grep
-gtk-chtheme
 guake
 gvfs-mtp
 gvfs-smb
@@ -146,6 +143,7 @@ lshw
 lsof
 luit
 lvm2
+lxappearance-gtk3
 make
 man-db
 man-pages
@@ -154,12 +152,14 @@ mdadm
 meld
 mesa-demos
 mlocate
+mojave-gtk-theme-git
 mpc
 mpd
 mpv
 msr-tools
 ncdu
 neofetch
+nerd-fonts-complete
 net-tools
 netease-cloud-music-gtk
 network-manager-applet
@@ -167,6 +167,7 @@ networkmanager
 nim
 nimble
 nmap
+nnn
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
@@ -178,6 +179,7 @@ pacgraph
 pacman
 pacman-contrib
 pandoc
+papirus-icon-theme
 pass
 patch
 pavucontrol
@@ -192,7 +194,6 @@ pkgfile
 polybar
 postgresql-libs
 postman-bin
-powerline-fonts
 powertop
 procps-ng
 profile-cleaner
@@ -218,7 +219,6 @@ qt5-networkauth
 qt5-quickcontrols2
 qt5-serialport
 quota-tools
-ranger
 redshift
 rofi
 rofi-calc
@@ -263,6 +263,7 @@ ttf-droid
 ttf-font-awesome
 ttf-hack
 ttf-ionicons
+ttf-jetbrains-mono
 ttf-liberation
 ttf-monaco
 ttf-opensans

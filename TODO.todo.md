@@ -1,5 +1,4 @@
 - [ ] ! https://wiki.archlinux.org/index.php/General_recommendations_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87) (2020-11-21 17:21)
-- [ ] ! `p10k configure`重新配置p10k (2020-11-19 18:08)
 - [ ] ! 考虑`/home/yj/.zshenv`的去留问题，它或许没用了 (2020-11-18 09:15)
 - [ ] 评估从YouCompleteMe切换到coc.nvim的可行性 (2020-11-21 15:18)
 - [ ] 配置YCM： (2020-10-17 11:36)
@@ -190,3 +189,4 @@
   - [X] - fpp (2020-11-20 13:44)
   - [X] + ttf-meslo-nerd-font-powerlevel10k （之前手动安装的可以通过字体管理器找到安装路径后手动删除） (2020-11-19 15:56)
   - [X] + mintstick (2020-11-20 13:51)
+- [X] ! `p10k configure`重新配置p10k (2020-11-19 18:08)

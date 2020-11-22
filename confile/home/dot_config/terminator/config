@@ -11,7 +11,7 @@
   enabled_plugins = TerminalShot, ActivityWatch, InactivityWatch, CustomCommandsMenu
   suppress_multiple_term_dialog = True
   title_use_system_font = False
-  title_font = MesloLGS NF 14
+  title_font = MesloLGS Nerd Font 14
 [keybindings]
   zoom_in = <Primary>equal
   zoom_out = <Primary>minus
