@@ -79,7 +79,7 @@ dpi = 96
 font-0 = "Source Han Sans CN: pixelsize=12; 3"
 font-1 = "Fixed: pixelsize=12; 3"
 font-2 = "Liberation Sans: fixed: pixelsize=12; 3"
-;  图标字体
+; 图标字体
 font-3 = "Font Awesome 5 Free: style=Solid: pixelsize=12; 3"
 font-4 = "Font Awesome 5 Brands: style=Regular: pixelsize=12; 3"
 font-5 = "Font Awesome: pixelsize=12; 3"
