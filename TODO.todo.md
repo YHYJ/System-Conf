@@ -1,5 +1,7 @@
+- [ ] ! https://wiki.archlinux.org/index.php/General_recommendations_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87) (2020-11-21 17:21)
 - [ ] ! `p10k configure`重新配置p10k (2020-11-19 18:08)
 - [ ] ! 考虑`/home/yj/.zshenv`的去留问题，它或许没用了 (2020-11-18 09:15)
+- [ ] 评估从YouCompleteMe切换到coc.nvim的可行性 (2020-11-21 15:18)
 - [ ] 配置YCM： (2020-10-17 11:36)
   - [ ] https://ycm-wiki-zhcn.readthedocs.io/zh_CN/latest/official_doc/intro.html (2020-10-17 11:07)
   - [ ] https://zhuanlan.zhihu.com/p/33046090 (2020-10-17 11:37)
