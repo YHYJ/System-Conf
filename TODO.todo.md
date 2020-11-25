@@ -1,5 +1,6 @@
 - [ ] ! https://wiki.archlinux.org/index.php/General_recommendations_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87) (2020-11-21 17:21)
 - [ ] ! 考虑`/home/yj/.zshenv`的去留问题，它或许没用了 (2020-11-18 09:15)
+- [ ] ! 参照：https://github.com/Martins3/My-Linux-config#%E5%AE%9E%E6%88%98 替换插件 (2020-11-25 19:52)
 - [ ] ! 彻底从ycmd切换到coc (2020-11-25 19:47)
   - [ ] 切换到'lsp' layer (2020-11-25 19:47)
   - [ ] 安装coc-python插件 (2020-11-25 19:47)
