@@ -49,7 +49,7 @@ Plug 'lilydjwg/colorizer'               " vim颜色码着色
 Plug 'tyru/open-browser.vim'            " 打开URL
 
 ">>>Coc插件的附属LSP插件<<<"
-Plug 'neoclide/coc-python'              " Python LSP
+" Plug 'neoclide/coc-python'              " Python LSP
 
 
 "========================= 暂时不使用的 ========================="

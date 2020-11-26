@@ -1,3 +1,12 @@
+"<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
+if !has('nvim')
+    set t_ti= t_te=                                                                 " 内容留屏
+    set nocompatible                                                                " 不使用vi键盘模式
+endif
+"<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 end >>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+
+
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 1. 实用功能设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
 ">>>>>>>>>>>>>>>>>> 字体
 set guifont=Monaco\ 14                                                          " gvim字体
@@ -7,9 +16,9 @@ set hidden                                                                      
 set ff=unix                                                                     " 使用unix风格换行，ff=dos为dos风格
 ">>>>>>>>>>>>>>>>>> 编码和语言设置
 set helplang=cn                                                                 " 帮助文件的优先语言版本，en是最后的
-set encoding=utf-8                                                              " 设置 Vim 内部使用的字符编码
+set encoding=UTF-8                                                              " 设置 Vim 内部使用的字符编码
 ">>>>>>>>>>>>>>>>>> history
-set history=1024
+set history=10000
 ">>>>>>>>>>>>>>>>>> 拼写检查
 set spell spelllang=en_us
 set spell spelllang=cjk
@@ -27,26 +36,24 @@ set list                                                                        
 " 制表符:|, 行尾空格:·, 右侧超出屏幕部分:>, 左侧超出屏幕部分:<
 set listchars=tab:\|\ ,trail:·,extends:>,precedes:<                             " 对于特定的字符显示特定的虚拟代表字符
 set fillchars=vert:\ ,stl:\ ,stlnc:\                                            " 在被分割的窗口间显示空白
-set guiheadroom=0                                                               " 窗口底部空间大小
 set scrolloff=999                                                               " 上下可视行数
 set sidescroll=1                                                                " 水平滚动的最小列数
 set sidescrolloff=1                                                             " 光标两侧最小列数
-" 退出Vim后回复Shell默认光标形状
-autocmd VimLeave * silent !echo -en '\e[5 q'
+set guicursor=                                                                  " 使光标模式保持一致
 set scrolljump=0                                                                " 禁止自动显示多行
 set cmdheight=1                                                                 " 命令行宽度
 set cursorline                                                                  " 突出显示当前行
 set cursorcolumn                                                                " 突出显示当前列
 set showcmd                                                                     " 显示输入的命令
 set showmatch                                                                   " 高亮显示匹配的括号
+set showmode                                                                    " 显示当前模式
 set matchtime=1                                                                 " 匹配括号高亮的时间（十分之一秒）
-set t_ti= t_te=                                                                 " 内容留屏
-set t_vb=                                                                       " 禁用闪烁
-set visualbell t_vb=                                                            " 禁用闪烁和铃声
-set display=lastline                                                            " 防止自动换行时折行的看不见
+set display="lastline,msgsep"                                                   " 防止自动换行时看不见折叠行
 ">>>>>>>>>>>>>>>>>> 设置行长
 set colorcolumn=81
 ">>>>>>>>>>>>>>>>>> 其他
+set ttyfast                                                                     " 启用快速终端模式
+set wildmenu                                                                    " 以增强模式运行命令行补全
 set confirm                                                                     " 退出前对未保存和只读文件弹出确认
 set gdefault                                                                    " 行内替换
 set viminfo+=!                                                                  " 保存全局变量
@@ -57,13 +64,10 @@ set magic                                                                       
 set title                                                                       " 改变终端标题
 set nobackup                                                                    " 禁用备份
 set noswapfile                                                                  " 禁用临时文件
-set novisualbell                                                                " 禁止闪烁
-set noerrorbells                                                                " 禁止警告音
-set nocompatible                                                                " 不使用vi键盘模式
+set belloff=all                                                                 " 任何情况下禁止响铃和闪烁
 set tm=500                                                                      " 为菜单或者工具定义提示，不适用于终端模式
 set laststatus=2                                                                " 打开底部状态栏
 set ruler                                                                       " 打开状态栏标尺
-set showmode                                                                    " display current modes
 set go=                                                                         " 不要图形按钮
 :command Q q                                                                    " 退出时不区分大小写
 :command WQ wq                                                                  " 保存退出时不区分大小写
