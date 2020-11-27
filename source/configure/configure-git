@@ -31,14 +31,17 @@ readonly err_permission=110 # 权限错误
 function getEditor() {
   if [[ -z $EDITOR ]]; then
     # $EDITOR变量为空
-    if command -v vim &>/dev/null; then
+    if command -v nvim &>/dev/null; then
+      editor="nvim"
+      merge_tool="vimdiff"
+    elif command -v vim &>/dev/null; then
       editor="vim"
       merge_tool="vimdiff"
     else
       editor="vi"
       merge_tool="diff"
     fi
-  elif [[ $EDITOR =~ "vim" ]];then
+  elif [[ $EDITOR =~ "vim" ]]; then
     editor=$EDITOR
     merge_tool="vimdiff"
   else

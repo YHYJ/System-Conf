@@ -36,15 +36,22 @@ if [[ -d $spacevim_path ]]; then
   exit $normal
 else
   git clone https://github.com/liuchengxu/space-vim.git "$spacevim_path"
-  if [[ -x /usr/bin/vim ]]; then
+  if [[ -x /usr/bin/nvim ]]; then
+    cd "$spacevim_path" || exit $err_file
+    if make neovim; then
+      echo -e "\nSpace-vim for neovim安装完成\n\n"
+    else
+      echo -e "\nSpace-vim for neovim安装失败\n\n"
+    fi
+  elif [[ -x /usr/bin/vim ]]; then
     cd "$spacevim_path" || exit $err_file
     if make vim; then
-      echo -e "\nSpace-vim安装完成\n\n"
+      echo -e "\nSpace-vim for vim安装完成\n\n"
     else
-      echo -e "\nSpace-vim安装失败\n\n"
+      echo -e "\nSpace-vim for vim安装失败\n\n"
     fi
   else
-    echo -e "\n可能未安装gvim/vim，退出\n\n"
+    echo -e "\n可能未安装neovim/gvim/vim，退出\n\n"
     exit $err_no_program
   fi
 fi
