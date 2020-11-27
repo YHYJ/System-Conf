@@ -1,4 +1,7 @@
-:<<!
+#!/usr/bin/env bash
+
+: <<!
+Name: rust.py
 Author: YJ
 Email: yj1516268@outlook.com
 Created Time: 2019-07-12 10:03:25

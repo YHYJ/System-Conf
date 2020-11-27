@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
+
 : <<!
+Name: go.sh
 Author: YJ
 Email: yj1516268@outlook.com
 Created Time: 2020-06-05 10:28:00

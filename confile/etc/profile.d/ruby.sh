@@ -1,4 +1,7 @@
-:<<!
+#!/usr/bin/env bash
+
+: <<!
+Name: ruby.sh
 Author: YJ
 Email: yj1516268@outlook.com
 Created Time: 2020-11-26 17:46:25

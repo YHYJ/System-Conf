@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 : <<!
-File: vaapi.sh
+Name: vaapi.sh
 Author: YJ
 Email: yj1516268@outlook.com
 Created Time: 2020-04-03 14:26:31
