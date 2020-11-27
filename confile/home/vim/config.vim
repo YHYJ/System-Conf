@@ -1,7 +1,12 @@
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
-if !has('nvim')
-    set t_ti= t_te=                                                                 " 内容留屏
-    set nocompatible                                                                " 不使用vi键盘模式
+if has('vim')
+  set t_ti= t_te=                                                                 " 内容留屏
+  set nocompatible                                                                " 不使用vi键盘模式
+endif
+
+if has('nvim')
+  let g:python_host_prog='/home/yj/.virtualenvs/2/bin/python'                     " python2可执行文件路径
+  let g:python3_host_prog='/home/yj/.virtualenvs/3/bin/python'                    " python3可执行文件路径
 endif
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 end >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
