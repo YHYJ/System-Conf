@@ -1,3 +1,6 @@
+- [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
+  - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)
+  - [ ] 之前的bbswitch配置只是不加载显卡的内核模块而已！！ (2020-11-27 17:44)
 - [ ] ! https://wiki.archlinux.org/index.php/General_recommendations_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87) (2020-11-21 17:21)
 - [ ] ! 参照：https://github.com/Martins3/My-Linux-config#%E5%AE%9E%E6%88%98 替换插件 (2020-11-25 19:52)
 - [ ] ! vim切换到neovim (2020-11-26 17:37)
