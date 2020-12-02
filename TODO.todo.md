@@ -1,5 +1,4 @@
 - [ ] ! 卸载autojump并在zshrc里取消启用相关插件，有dtags用不到它 (2020-12-02 18:04)
-- [ ] ! 升级之前先在virtualenv 3运行`pip freeze >3_packages.txt` (2020-12-02 15:37)
 - [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
   - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)
   - [ ] 之前的bbswitch配置只是不加载显卡的内核模块而已！！ (2020-11-27 17:44)
@@ -202,3 +201,4 @@
   - [X] + mintstick (2020-11-20 13:51)
 - [X] ! `p10k configure`重新配置p10k (2020-11-19 18:08)
 - [X] 评估从YouCompleteMe切换到coc.nvim的可行性 (2020-11-21 15:18)
+- [X] ! 升级之前先在virtualenv 3运行`pip freeze >3_packages.txt` (2020-12-02 15:37)
