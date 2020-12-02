@@ -1,3 +1,4 @@
+- [ ] ! 升级之前先在virtualenv 3运行`pip freeze >3_packages.txt` (2020-12-02 15:37)
 - [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
   - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)
   - [ ] 之前的bbswitch配置只是不加载显卡的内核模块而已！！ (2020-11-27 17:44)
