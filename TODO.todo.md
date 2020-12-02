@@ -1,3 +1,4 @@
+- [ ] ! 卸载autojump并在zshrc里取消启用相关插件，有dtags用不到它 (2020-12-02 18:04)
 - [ ] ! 升级之前先在virtualenv 3运行`pip freeze >3_packages.txt` (2020-12-02 15:37)
 - [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
   - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)

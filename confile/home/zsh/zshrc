@@ -77,7 +77,6 @@ plugins=(
   golang                    # 提供go命令的alias
   docker                    # docker命令自动补全
   extract                   # 文件解压缩                : extract <file>
-  autojump                  # 提供路径跳转              : j <path keyword>
   docker-compose            # docker-compose命令自动补全和alias
 )
 
