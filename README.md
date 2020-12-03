@@ -48,6 +48,7 @@ repo中各个一级文件夹的作用
 - Mail
 - Proxy
 - Guake
+- Virtualenv
 
 ## script
 
