@@ -214,17 +214,20 @@ content-background = ${colors.ocean-grey}
 [module/github]
 ;; 显示Github未读通知（兼有显示网络状态的效果）
 type = internal/github
-interval = 5
+interval = 10
 empty-notifications = false
 
 token = ${file:/home/yj/.config/polybar-script/notifications.token}
+user = YHYJ
 
 label = %notifications%
-
 format = <label>
 format-padding = 1
 format-prefix = 
 format-prefix-margin = 1
+
+label-offline = Offline
+format-offline = <label-offline>
 
 
 [module/title]
