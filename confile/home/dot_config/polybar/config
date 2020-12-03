@@ -27,7 +27,6 @@ margin-bottom = 5
 
 
 [settings]
-throttle-input-for = 30
 throttle-output = 5
 throttle-output-for = 10
 
