@@ -1,12 +1,12 @@
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
 if has('vim')
-  set t_ti= t_te=                                                                 " 内容留屏
-  set nocompatible                                                                " 不使用vi键盘模式
+  set t_ti= t_te=                                                               " 内容留屏
+  set nocompatible                                                              " 不使用vi键盘模式
 endif
 
 if has('nvim')
-  let g:python_host_prog='/home/yj/.virtualenvs/2/bin/python'                     " python2可执行文件路径
-  let g:python3_host_prog='/home/yj/.virtualenvs/3/bin/python'                    " python3可执行文件路径
+  let g:python_host_prog='/usr/bin/python2'                                     " python2可执行文件路径
+  let g:python3_host_prog='/usr/bin/python3'                                    " python3可执行文件路径
 endif
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 end >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
@@ -74,9 +74,9 @@ set tm=500                                                                      
 set laststatus=2                                                                " 打开底部状态栏
 set ruler                                                                       " 打开状态栏标尺
 set go=                                                                         " 不要图形按钮
-:command Q q                                                                    " 退出时不区分大小写
-:command WQ wq                                                                  " 保存退出时不区分大小写
-:command Wq wq                                                                  " 保存退出时不区分大小写
+command Q q                                                                     " 退出时不区分大小写
+command WQ wq                                                                   " 保存退出时不区分大小写
+command Wq wq                                                                   " 保存退出时不区分大小写
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 1. 实用功能设置 End >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
