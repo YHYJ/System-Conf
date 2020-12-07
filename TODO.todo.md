@@ -1,4 +1,6 @@
-- [ ] ! 安装pyenv用于在非系统路径安装非系统版本python -- 不用配合pyenv-virtualenv，pyenv创建env之后virtualenv就能检索到并用来创建venv (2020-12-07 19:38)
+- [ ] ! pipenv统筹调度virtualenv和pyenv： (2020-12-07 20:18)
+  - [ ] virtualenv用来操作虚拟环境 (2020-12-07 20:18)
+  - [ ] pyenv用于安装系统中没有的python版本 (2020-12-07 20:19)
 - [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
   - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)
   - [ ] 之前的bbswitch配置只是不加载显卡的内核模块而已！！ (2020-11-27 17:44)
