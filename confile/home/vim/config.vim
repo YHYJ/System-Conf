@@ -141,10 +141,9 @@ set tabstop=4                                                                   
 set shiftwidth=4                                                                " 移位操作 >> 或 << 的缩进长度
 set softtabstop=4                                                               " 统一缩进为4
 set smarttab                                                                    " 在行和段开始处使用制表符
-set shiftround
+set shiftround                                                                  " 缩进取整到'shiftwidth'的倍数，应用于 > 和 < 命令
 set autoindent                                                                  " 新行自动保持上一行的缩进状态
 set smartindent                                                                 " 智能缩进
-set cindent
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 2. 泛代码设置 End >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
