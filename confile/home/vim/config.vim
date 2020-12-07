@@ -135,8 +135,6 @@ function! CompileRunGcc()
     exec "!/usr/bin/time -p lua %"
   endif
 endfunction
-">>>>>>>>>>>>>>>>>> 文件类型识别
-" autocmd BufRead,BufNew *.md,*.mkd,*.markdown,*.mkdn,*.mdwn,*.mdown set filetype=markdown.mkd
 ">>>>>>>>>>>>>>>>>> 缩进
 set expandtab                                                                   " 缩进时用空格代替制表符
 set tabstop=4                                                                   " Tab键的宽度
