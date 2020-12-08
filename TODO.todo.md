@@ -1,3 +1,4 @@
+- [ ] ! 安装使用flameshot进行截图 (2020-12-08 16:04)
 - [ ] 卸载了noto-fonts-extra和noto-fonts-cjk，观察影响 (2020-12-08 09:07)
 - [ ] ! pipenv统筹调度virtualenv和pyenv： (2020-12-07 20:18)
   - [ ] virtualenv用来操作虚拟环境 (2020-12-07 20:18)
