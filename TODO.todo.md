@@ -1,3 +1,4 @@
+- [ ] 卸载了noto-fonts-extra和noto-fonts-cjk，观察影响 (2020-12-08 09:07)
 - [ ] ! pipenv统筹调度virtualenv和pyenv： (2020-12-07 20:18)
   - [ ] virtualenv用来操作虚拟环境 (2020-12-07 20:18)
   - [ ] pyenv用于安装系统中没有的python版本 (2020-12-07 20:19)
