@@ -27,7 +27,7 @@ Depends:
 readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
-readonly minor_version=20201126
+readonly minor_version=20201209
 readonly rel_version=1
 
 #------------------------- Exit Code Variable
@@ -104,6 +104,7 @@ readonly profiled_sh_back="$backup_path/confile/etc/profile.d"
 readonly proshs=(
   browser.sh editor.sh
   go.sh nim.sh rust.sh ruby.sh
+  pipenv.sh
   vaapi.sh
 )
 # X11.xorg.conf.d
