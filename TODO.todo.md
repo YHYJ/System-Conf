@@ -1,3 +1,5 @@
+- [ ] ! 安装zsh-theme-powerlevel10k-git（官方推荐zsh-theme-powerlevel10k而非zsh-theme-powerlevel10k） (2020-12-10 10:33)
+  - [ ] 还有他的可选依赖awesome-terminal-fonts (2020-12-10 10:33)
 - [ ] ! 安装使用flameshot进行截图 (2020-12-08 16:04)
 - [ ] 卸载了noto-fonts-extra和noto-fonts-cjk，观察影响 (2020-12-08 09:07)
 - [ ] ! pipenv统筹调度virtualenv和pyenv： (2020-12-07 20:18)
