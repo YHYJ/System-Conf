@@ -5,8 +5,10 @@ if has('vim')
 endif
 
 if has('nvim')
-  let g:python_host_prog='/usr/bin/python2'                                     " python2可执行文件路径
-  let g:python3_host_prog='/usr/bin/python3'                                    " python3可执行文件路径
+  let g:python_host_prog = '/usr/bin/python2'                                   " python2 neovim客户端可执行文件路径
+  let g:python3_host_prog = '/usr/bin/python3'                                  " python3 neovim客户端可执行文件路径
+  let g:node_host_prog = '/usr/bin/neovim-node-host'                            " nodejs neovim客户端可执行文件路径
+  let g:ruby_host_prog = '/usr/bin/neovim-ruby-host'                            " ruby neovim客户端可执行文件路径
 endif
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 0. vim和neovim有别的设置 end >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
