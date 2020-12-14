@@ -1,4 +1,3 @@
-- [ ] ! 安装使用flameshot进行截图 (2020-12-08 16:04)
 - [ ] ! pipenv统筹调度virtualenv和pyenv： (2020-12-07 20:18)
   - [ ] virtualenv用来操作虚拟环境 (2020-12-07 20:18)
   - [ ] pyenv用于安装系统中没有的python版本 (2020-12-07 20:19)
@@ -210,3 +209,4 @@
 - [X] + nodejs-neovim & ruby-neovim (2020-12-13 21:17)
 - [X] ! 安装zsh-theme-powerlevel10k-git（官方推荐zsh-theme-powerlevel10k而非zsh-theme-powerlevel10k） (2020-12-10 10:33)
   - [X] 还有他的可选依赖awesome-terminal-fonts (2020-12-10 10:33)
+- [X] ! 安装使用flameshot进行截图 (2020-12-08 16:04)
