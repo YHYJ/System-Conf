@@ -28,7 +28,7 @@ readonly name=$(basename "$0")
 # program nversion
 readonly major_version=2.3
 readonly minor_version=20201215
-readonly rel_version=1
+readonly rel_version=2
 
 #------------------------- Exit Code Variable
 readonly normal=0           # 一切正常
@@ -750,7 +750,7 @@ else
 
         finishInfo
         ;;
-      pkg)
+      package)
         echo -e "检查 \e[1;34;47mPackage\e[0m 系列"
         updateCache
         backupPackage
