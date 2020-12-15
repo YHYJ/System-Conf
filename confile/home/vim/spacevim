@@ -13,7 +13,7 @@ let g:spacevim_plug_home = '~/.vim/plugged'
 let g:spacevim_lsp_engine = 'coc'
 let g:spacevim_layers = [
       \ 'fzf', 'better-defaults', 'which-key',
-      \ 'unite', 'ycmd', 'airline',
+      \ 'unite', 'airline',
       \ 'rust', 'go', 'syntax-checking',
       \ 'docker', 'github', 'git',
       \ ]
