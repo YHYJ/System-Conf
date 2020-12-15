@@ -10,9 +10,9 @@ archlinuxcn-keyring
 archlinuxcn-mirrorlist-git
 asciinema
 autoconf
-autojump
 automake
 autopep8
+awesome-terminal-fonts
 axel
 baidupcs-go
 bandwhich
@@ -61,7 +61,6 @@ e2fsprogs
 ebtables
 efibootmgr
 efivar
-elinks
 emacs
 ethtool
 exa
@@ -84,6 +83,7 @@ findutils
 firefox
 firefox-i18n-zh-cn
 flake8
+flameshot
 flex
 freetds
 fwupd
@@ -106,7 +106,6 @@ grep
 guake
 gvfs-mtp
 gvfs-smb
-gvim
 gzip
 hardinfo
 hdparm
@@ -159,6 +158,7 @@ mpv
 msr-tools
 ncdu
 neofetch
+neovim
 nerd-fonts-complete
 net-tools
 netease-cloud-music-gtk
@@ -168,9 +168,8 @@ nim
 nimble
 nmap
 nnn
-noto-fonts-cjk
+nodejs
 noto-fonts-emoji
-noto-fonts-extra
 ntfs-3g
 nuspell
 nvme-cli
@@ -194,6 +193,7 @@ pkgfile
 polybar
 postgresql-libs
 postman-bin
+powerline-fonts
 powertop
 procps-ng
 profile-cleaner
@@ -209,6 +209,7 @@ python-hyperlink
 python-isort
 python-lxml
 python-pyflakes
+python-pynvim
 python-pyqt5
 python-shiboken2
 python-virtualenv
@@ -222,6 +223,7 @@ quota-tools
 redshift
 rofi
 rofi-calc
+ruby
 rustup
 sddm
 seahorse
@@ -287,9 +289,6 @@ whois
 wireless_tools
 wmname
 wpa_supplicant
-wps-office
-wps-office-mime
-wps-office-mui-zh-cn
 wqy-microhei
 wqy-zenhei
 xarchiver
@@ -309,7 +308,6 @@ xorg-server-devel
 xorg-server-xephyr
 xorg-server-xnest
 xorg-server-xvfb
-xorg-server-xwayland
 xorg-sessreg
 xorg-smproxy
 xorg-x11perf
@@ -335,12 +333,14 @@ xorg-xrdb
 xorg-xrefresh
 xorg-xsetroot
 xorg-xvinfo
+xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
 xreader
 xsel
 yapf
+yarn
 yay
 ydcv-rs-git
 youtube-dl
