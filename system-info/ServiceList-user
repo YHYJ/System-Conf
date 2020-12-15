@@ -22,6 +22,7 @@ gvfs-udisks2-volume-monitor.service                                  static    -
 mpd.service                                                          enabled   enabled      
 obex.service                                                         disabled  enabled      
 p11-kit-server.service                                               disabled  enabled      
+pipewire-pulse.service                                               disabled  enabled      
 pipewire.service                                                     disabled  enabled      
 pulseaudio.service                                                   disabled  enabled      
 redshift-gtk.service                                                 disabled  enabled      
@@ -32,6 +33,9 @@ systemd-tmpfiles-setup.service                                       disabled  e
 thunar.service                                                       static    -            
 tracker-xdg-portal-3.service                                         static    -            
 xdg-user-dirs-update.service                                         enabled   enabled      
+app.slice                                                            static    -            
+background.slice                                                     static    -            
+session.slice                                                        static    -            
 dbus.socket                                                          static    -            
 dirmngr.socket                                                       enabled   enabled      
 gpg-agent-browser.socket                                             enabled   enabled      
@@ -40,6 +44,7 @@ gpg-agent-ssh.socket                                                 enabled   e
 gpg-agent.socket                                                     enabled   enabled      
 mpd.socket                                                           disabled  enabled      
 p11-kit-server.socket                                                enabled   enabled      
+pipewire-pulse.socket                                                disabled  enabled      
 pipewire.socket                                                      enabled   enabled      
 pulseaudio.socket                                                    enabled   enabled      
 basic.target                                                         static    -            
@@ -58,4 +63,4 @@ timers.target                                                        static    -
 xdg-desktop-autostart.target                                         static    -            
 systemd-tmpfiles-clean.timer                                         disabled  enabled      
 
-58 unit files listed.
+63 unit files listed.

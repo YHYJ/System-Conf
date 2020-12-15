@@ -147,6 +147,7 @@ systemd-fsck@.service                      static          -
 systemd-halt.service                       static          -            
 systemd-hibernate-resume@.service          static          -            
 systemd-hibernate.service                  static          -            
+systemd-homed-activate.service             disabled        disabled     
 systemd-homed.service                      disabled        enabled      
 systemd-hostnamed.service                  static          -            
 systemd-hwdb-update.service                static          -            
@@ -313,6 +314,7 @@ default.target                             alias           -
 emergency.target                           static          -            
 exit.target                                disabled        disabled     
 final.target                               static          -            
+first-boot-complete.target                 static          -            
 getty-pre.target                           static          -            
 getty.target                               static          -            
 graphical.target                           static          -            
@@ -379,4 +381,4 @@ systemd-tmpfiles-clean.timer               static          -
 updatedb.timer                             static          -            
 xfs_scrub_all.timer                        disabled        disabled     
 
-379 unit files listed.
+381 unit files listed.
