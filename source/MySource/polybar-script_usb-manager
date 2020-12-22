@@ -22,8 +22,8 @@ Depends:
 # program name
 readonly name=$(basename "$0")
 # program version
-readonly major_version=1.0
-readonly minor_version=20200824
+readonly major_version=1.1
+readonly minor_version=20201222
 readonly rel_version=1
 
 #------------------------- Exit Code Variable
@@ -37,7 +37,7 @@ readonly pid_file="/tmp/$name.pid"
 # time variable
 readonly time_out=1
 # dir variable
-readonly open_dir="/run/media/$USER"
+# readonly open_dir="/run/media/$USER"
 
 ####################################################################
 #+++++++++++++++++++++++++ Define Function ++++++++++++++++++++++++#
@@ -82,7 +82,7 @@ function usb_mount() {
     mountpoint=$(echo "$mountpoint" | cut -d " " -f 4 | tr -d ".")
   done
   # 自动打开
-  xdg-open "$open_dir" &
+  # xdg-open "$open_dir" &
 }
 
 function usb_unmount() {
