@@ -1,5 +1,8 @@
 - [ ] App: (2020-12-23 15:35)
+  - [ ] + samsung_magician-consumer-ssd: Samsung固态的固件更新程序（谨慎） (2020-12-23 18:34)
+    - [ ] 参考：https://wiki.archlinux.org/index.php/Solid_state_drive#Upgrade_under_Linux (2020-12-23 18:32)
   - [ ] + intel-mas-cli-tool: Intel内存和固态的固件更新程序（谨慎） (2020-12-23 18:10)
+    - [ ] 参考：https://wiki.archlinux.org/index.php/Solid_state_drive#Intel (2020-12-23 18:35)
   - [ ] + profile-sync-daemon: 将浏览器运行时文件缓存到tmpfs (2020-12-23 17:54)
     - [ ] 1. 如果~/.config/psd/psd.conf已存在需要删除 (2020-12-23 17:55)
     - [ ] 2. 使用systemd user模式管理psd.service (2020-12-23 17:56)
