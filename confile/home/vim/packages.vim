@@ -52,9 +52,6 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 
 
 "========================= 暂时不使用的 ========================="
-">>>Code<<<"
-" Plug 'preservim/tagbar'                 " 代码标签浏览器, 依赖ctags - 不显示
-
 ">>>Nim<<<"
 " Plug 'zah/nim.vim'                      " 有BUG
 " Plug 'baabelfish/nvim-nim'              " :make 命令检查代码错误，过时
@@ -63,10 +60,8 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 " Plug 'tpope/vim-repeat'                 " 结合 . 重复执行一些插件的命令，支持有限
 
 ">>>EDIT & IDE<<<"
-" Plug 'nathanaelkane/vim-indent-guides'  " 直观显示缩进级别
 " Plug 'junegunn/vim-easy-align'          " 自动对齐：自定义对齐字符
 " Plug 'vim-scripts/a.vim'                " 在源文件和头文件之间快速切换
-" Plug 'matze/vim-move'                   " 文本移动, 无效
 
 ">>>Code<<<"
 " Plug 'neomake/neomake'                  " 异步语法检查
@@ -75,7 +70,6 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 " pelodelfuego/vim-swoop                  " 一次操作多文件
 
 ">>>Fun<<<"
-" Plug 'kristijanhusak/vim-carbon-now-sh' " 将代码传到https://carbon.now.sh/生成代码图片
 " Plug 'junegunn/vim-emoji'
 
 ">>>Rust<<<"
