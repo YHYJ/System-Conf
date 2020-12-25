@@ -148,6 +148,7 @@ System：系统组件（包含字体）
 | corkscrew                  | 通过HTTP代理连接SSH                                        | CLI     | 非必要 |
 | proxychains-ng             | Socks & Http代理                                           | CLI     | 非必要 |
 | linux-wifi-hotspot         | 创建AP                                                     | GUI     | 非必要 |
+| packetsender               | 发送/接收TCP和UDP数据包                                    | GUI     | 非必要 |
 
 ## 开发
 
