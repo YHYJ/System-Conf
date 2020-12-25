@@ -374,8 +374,8 @@ autocmd FileType python nnoremap <LocalLeader>i :!isort %<CR><CR>
 "++++++++++++++++++++
 ">>>>>>>>>>>>>>>>>> nerdtree: 文件浏览器
 noremap <F2> :NERDTreeToggle<CR>
-">>>>>>>>>>>>>>>>>> <F3> | tagbar: 代码标签浏览器
-nnoremap <F3> :TagbarToggle<CR>
+">>>>>>>>>>>>>>>>>> <F3> | vista: LSP和tag的搜索和查看器
+nnoremap <F3> :Vista!!<CR>
 ">>>>>>>>>>>>>>>>>> <F4> | vim-mundo: 历史撤销树浏览器
 nnoremap <F4> :MundoToggle<CR>
 ">>>>>>>>>>>>>>>>>> <F5> | goyo.vim+limelight.vim: 专注+打字机模式
@@ -584,34 +584,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_generate_tags = 1
-">>>>>>>>>>>>>>>>>> topbar: 标签查看器
-let g:tagbar_type_go = {
-      \ 'ctagstype': 'go',
-      \ 'kinds': [
-      \ 'p:package',
-      \ 'i:imports:1',
-      \ 'c:constants',
-      \ 'v:variables',
-      \ 't:types',
-      \ 'n:interfaces',
-      \ 'w:fields',
-      \ 'e:embedded',
-      \ 'm:methods',
-      \ 'r:constructor',
-      \ 'f:functions'
-      \ ],
-      \ 'sro': '.',
-      \ 'kind2scope': {
-      \ 't': 'ctype',
-      \ 'n': 'ntype'
-      \ },
-      \ 'scope2kind': {
-      \ 'ctype': 't',
-      \ 'ntype': 'n'
-      \ },
-      \ 'ctagsbin': 'gotags',
-      \ 'ctagsargs': '-sort -silent'
-      \ }
 ">>>>>>>>>>>>>>>>>> vim-markdown: markdown插件
 let g:vim_markdown_toc_autofit = 1                                              " 自适应目录窗口大小
 let g:vim_markdown_conceal_code_blocks = 0                                      " 禁用隐藏代码块标记

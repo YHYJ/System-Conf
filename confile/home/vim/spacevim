@@ -15,7 +15,7 @@ let g:spacevim_layers = [
       \ 'fzf', 'better-defaults', 'which-key',
       \ 'unite', 'airline',
       \ 'rust', 'go', 'syntax-checking',
-      \ 'docker', 'github', 'git',
+      \ 'docker', 'github', 'git', 'programming'
       \ ]
 
 " Uncomment the following line if your terminal(-emulator) supports true colors.

@@ -14,7 +14,6 @@ Plug 'simnalamburt/vim-mundo'           " vim历史撤销树
 Plug 'aserebryakov/vim-todo-lists'      " TODO列表
 
 ">>>Code<<<"
-Plug 'majutsushi/tagbar'                " 代码标签浏览器, 依赖ctags
 Plug 'mileszs/ack.vim'                  " 在项目中搜索指定代码（因为安装了ag而非ack，所以是Ag命令而不是Ack）
 Plug 'easymotion/vim-easymotion'        " 快捷跳转
 
@@ -53,6 +52,9 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 
 
 "========================= 暂时不使用的 ========================="
+">>>Code<<<"
+" Plug 'preservim/tagbar'                 " 代码标签浏览器, 依赖ctags - 不显示
+
 ">>>Nim<<<"
 " Plug 'zah/nim.vim'                      " 有BUG
 " Plug 'baabelfish/nvim-nim'              " :make 命令检查代码错误，过时
