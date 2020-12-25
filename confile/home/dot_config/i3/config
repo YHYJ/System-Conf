@@ -37,9 +37,7 @@ font pango:DejaVu Sans Mono, Icons 9
 # 默认就是悬浮窗口
 # 使用`xprop WM_CLASS`确认窗口类名
 for_window [class="Guake"] floating enable
-for_window [class="Wihotspot"] floating enable
 for_window [class="Galculator"] floating enable
-for_window [class="packetsender"] floating enable
 # 添加容器到悬浮窗口
 bindsym $mod+$shift+plus move scratchpad
 # 唤出悬浮窗口中的容器
