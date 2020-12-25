@@ -12,9 +12,9 @@ Attentions：
 2. 将未读邮件全部置为已读
 """
 
-import sys
 import email
 import imaplib
+import sys
 
 import toml
 
@@ -53,10 +53,10 @@ def set_mail(config, tags):
         box = config['mail'].get('mailbox', 'INBOX')
         criteria = config['mail'].get('criteria', 'UnSeen')
     else:
-        return '无法获取配置信息'   # Output
+        return '无法获取配置信息'  # Output
 
-    count = 0       # 未读邮件计数
-    subject = ''    # 邮件主题
+    count = 0  # 未读邮件计数
+    subject = ''  # 邮件主题
 
     branch_switch = ['switch', '-s', '-switch', '--switch']
     branch_count = ['count', '-c', '-count', '--count', sys.argv[0]]
@@ -78,11 +78,11 @@ def set_mail(config, tags):
             count = len(umail)
 
             if len(tags) > 2:
-                return '程序参数过多'   # Output
+                return '程序参数过多'  # Output
             else:
                 if tags[-1] in branch_switch:
                     # 分支1：将UNSEEN状态转换为SEEN
-                    if count > 0:   # 有未读邮件
+                    if count > 0:  # 有未读邮件
                         begin = umail[0].decode()
                         end = umail[-1].decode()
                         interval = '{}:{}'.format(begin, end)
@@ -94,45 +94,40 @@ def set_mail(config, tags):
                     if count > 0:
                         # 获取最新未读邮件的标题
                         # # 获取最新未读邮件的原始信息
-                        (_, raw_msg) = mail.fetch(
-                            umail[-1].decode(), '(RFC822)'
-                        )
+                        (_, raw_msg) = mail.fetch(umail[-1].decode(),
+                                                  '(RFC822)')
                         # # 处理最新未读邮件的原始信息
                         msg = email.message_from_string(
-                            raw_msg[0][1].decode('utf-8')
-                        )
+                            raw_msg[0][1].decode('utf-8'))
                         if msg:
                             # # 获取最新未读邮件标题
                             subject = str(
                                 email.header.make_header(
-                                    email.header.decode_header(msg['Subject'])
-                                )
-                            )
+                                    email.header.decode_header(
+                                        msg['Subject'])))
                         else:
                             subject = '需要处理撤回邮件'
                     else:
                         return ''
                 else:
-                    return '参数错误'   # Output
+                    return '参数错误'  # Output
         except Exception:
             count = 'Search Error'
     except Exception:
         count = 'Login Error'
 
     # 构建返回值
-    mail_count = '[{count}] {subject}'.format(
-        count=count, subject=subject
-    )
+    mail_count = '[{count}] {subject}'.format(count=count, subject=subject)
 
-    return mail_count   # Output
+    return mail_count  # Output
 
 
 if __name__ == "__main__":
     file_name = __file__[:-3]
     confile = '/home/yj/.config/polybar-script/{}.toml'.format(file_name)
 
-    config = get_config(confile)    # 获取配置信息
-    tags = sys.argv                 # 获取参数列表
+    config = get_config(confile)  # 获取配置信息
+    tags = sys.argv  # 获取参数列表
 
     mail_count = set_mail(config, tags)
     print(mail_count)
