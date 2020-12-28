@@ -18,6 +18,7 @@
 - [ ] Blog:
   - [ ] mkfs.ntfs加 -Q 参数，否则格式化极其慢 (2020-12-18 13:52)
   - [ ] `nvim --startuptime ~/nvimstart.log`命令检测neovim启动速度 (2020-12-23 19:02)
+  - [ ] 解决dbeaver无法启动问题：使用命令`archlinux-jave`将Java environment从java-8-openjdk修改为java-14-openjdk即可 (2020-12-28 11:44)
 - [ ] ! 配置完善zsh的自动补全功能 (2020-12-15 08:55)
 - [ ] ! 彻底关掉N卡 (2020-11-27 17:43)
   - [ ] 参考：https://bbs.archlinuxcn.org/viewtopic.php?id=9987 (2020-11-27 17:44)
