@@ -1,3 +1,4 @@
+- [ ] Vim配置，参见https://zhuanlan.zhihu.com/p/60907165 (2020-12-28 09:44)
 - [ ] App: (2020-12-23 15:35)
   - [ ] + samsung_magician-consumer-ssd: Samsung固态的固件更新程序（谨慎） (2020-12-23 18:34)
     - [ ] 参考：https://wiki.archlinux.org/index.php/Solid_state_drive#Upgrade_under_Linux (2020-12-23 18:32)
