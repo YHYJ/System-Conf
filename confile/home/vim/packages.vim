@@ -31,6 +31,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'jiangmiao/auto-pairs'             " 成对操作，自动匹配前一个
 
 ">>>资源管理器<<<"
+Plug 'liuchengxu/vista.vim'             " 搜索和查看LSP symbols和tags
 Plug 'ctrlpvim/ctrlp.vim'               " 全路径模糊搜索
 Plug 'scrooloose/nerdtree'              " vim文管
 Plug 'Xuyuanp/nerdtree-git-plugin'      " 在nerdtree显示git状态
