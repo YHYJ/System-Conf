@@ -113,6 +113,7 @@ hexer
 htop
 hugo
 i3-gaps
+i3lock-color
 i7z
 inetutils
 intel-gpu-tools
@@ -187,6 +188,7 @@ peek
 perl
 perl-anyevent-i3
 picom
+pigz
 pipewire
 pkgconf
 pkgfile
@@ -282,7 +284,6 @@ usbutils
 util-linux
 v2ray
 virt-manager
-w3m
 wget
 which
 whois
@@ -295,7 +296,6 @@ xarchiver
 xchm
 xdg-user-dirs
 xf86-video-intel
-xfce4-taskmanager
 xfsprogs
 xorg-bdftopcf
 xorg-docs
