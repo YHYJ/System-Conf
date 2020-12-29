@@ -61,8 +61,10 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 " Plug 'tpope/vim-repeat'                 " 结合 . 重复执行一些插件的命令，支持有限
 
 ">>>EDIT & IDE<<<"
+" Plug 'nathanaelkane/vim-indent-guides'  " 直观显示缩进级别
 " Plug 'junegunn/vim-easy-align'          " 自动对齐：自定义对齐字符
 " Plug 'vim-scripts/a.vim'                " 在源文件和头文件之间快速切换
+" Plug 'matze/vim-move'                   " 文本移动
 
 ">>>Code<<<"
 " Plug 'neomake/neomake'                  " 异步语法检查
