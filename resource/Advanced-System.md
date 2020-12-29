@@ -100,7 +100,7 @@ SATA设备必须使用特定于制造商的程序，并非所有SATA设备都支
 
 #### 将频繁使用的文件置于内存
 
-将浏览器配置文件通过tmpfs挂载到内存，并使用rsync同步基于硬盘的备份，这会减少磁盘损耗，加快浏览器速度
+将浏览器配置文件通过tmpfs挂载到内存，并使用rsync同步基于硬盘的备份，这会减少磁盘损耗，加快浏览器速度，但也会增加login过程的耗时
 
 有自动完成该过程的软件[profile-sync-daemon](https://wiki.archlinux.org/index.php/profile-sync-daemon)
 
