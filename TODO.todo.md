@@ -1,3 +1,4 @@
+- [ ] ! 配置Guake的快捷键和字体 (2020-12-30 10:04)
 - [ ] Vim配置，参见https://zhuanlan.zhihu.com/p/60907165 (2020-12-28 09:44)
 - [ ] App: (2020-12-23 15:35)
   - [ ] + samsung_magician-consumer-ssd: Samsung固态的固件更新程序（谨慎） (2020-12-23 18:34)
