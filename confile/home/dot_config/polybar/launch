@@ -15,9 +15,7 @@ killall -q polybar
 
 # 创建日志文件
 echo "---" | tee -a /tmp/polybar.log
+echo -e "<$(date '+%Y.%m.%d %H:%M:%S')> Polybar launched..." >>/tmp/polybar.log 2>&1 &
 
 # 启动polybar实例
 polybar --reload mypolybar >>/tmp/polybar.log 2>&1 &
-
-# 记录日志
-echo -e "<$(date '+%Y.%m.%d %H:%M:%S')> Polybar launched..." >>/tmp/polybar.log 2>&1 &
