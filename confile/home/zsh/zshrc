@@ -133,7 +133,7 @@ ttyctl -f
 # --about virtualenv
 virtualenv="/usr/bin/virtualenv"
 python="/usr/bin/python"
-workon_home="$HOME/.virtualenvs"
+workon_home="/home/yj/.virtualenvs"
 virtualenvwrapper="/usr/bin/virtualenvwrapper.sh"
 virtualenvwrapper_lazy="/usr/bin/virtualenvwrapper_lazy.sh"
 if [[ -x $virtualenv && -x $python ]]; then
