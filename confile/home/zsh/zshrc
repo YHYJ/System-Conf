@@ -154,17 +154,17 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
-# --about http/https proxy
-export http_proxy="http://127.0.0.1:1080"
-export https_proxy=$http_proxy
-alias on="export http_proxy=http://127.0.0.1:1080 https_proxy=$http_proxy"
-alias off="unset http_proxy https_proxy"
-
 # --about Command 'fuck'
 eval $(thefuck --alias)
 
 # --about Command 'dtags'
 command -v dtags-activate > /dev/null 2>&1 && eval "`dtags-activate zsh`"
+
+# --about http/https proxy
+export http_proxy="http://127.0.0.1:1080"
+export https_proxy=$http_proxy
+alias on="export http_proxy=http://127.0.0.1:1080 https_proxy=$http_proxy"
+alias off="unset http_proxy https_proxy"
 
 # --about alias
 alias g-a='git status && git add . && git commit -am '
@@ -180,12 +180,13 @@ alias vi='nvim'                             # 屏蔽vi
 alias emacs='emacs -nw'                     # 以文本模式启动emacs
 alias ml='apropos'                          # 检索命令
 alias img='feh -F --auto-zoom'              # 查看图片
-alias 2ipython='workon 2 && ipython'        # 一键开启env3及其ipython
-alias 3ipython='workon 3 && ipython'        # 一键开启env2及其ipython
+alias i2='workon 2 && ipython'              # 一键开启env3及其ipython
+alias i3='workon 3 && ipython'              # 一键开启env2及其ipython
 alias diff='colordiff'                      # diff着色
 alias lsb_release='lsb_release -a'          # 显示系统信息
 alias todo='nvim TODO.todo.md'              # 快速打开TODOList文件
 alias readme='nvim README.md'               # 快速打开README文件
+alias ydcv='off && ydcv'                    # 打开ydcv词典
 # --使用指定命令打开指定后缀的文件
 alias -s {conf,hook,dbc,toml,yaml,json,xml,txt,go,rs,nim}=nvim
 alias -s {md,mkd,mkdn,mdwn,mdown,markdown}=typora
