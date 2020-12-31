@@ -27,7 +27,8 @@ readonly path="$HOME/Documents/MyRepos"
 readonly repos=(
   BlockChain-learn
   C-learn
-  Database-learn Data-Analyze-learn Devicer
+  Database-learn Data-Analyze-learn Devicer DataWizard
+  Sniffer OPC2Socket
   Flask-learn
   Go-learn
   Linux-learn
