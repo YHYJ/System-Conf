@@ -39,6 +39,7 @@ nanopi
 nim
 note
 old
+opc
 package
 pan
 pi
@@ -52,6 +53,7 @@ rpi
 rust
 s
 shell
+sniffer
 sp
 spacevim
 sys
