@@ -40,8 +40,8 @@ filetype plugin on                                                              
 filetype indent on                                                              " 为特定类型文件载入相关缩进文件
 ">>>>>>>>>>>>>>>>>> 显示设置
 set list                                                                        " 显示Tab符
-" 制表符:|, 行尾空格:·, 右侧超出屏幕部分:>, 左侧超出屏幕部分:<
-set listchars=tab:\|\ ,trail:·,extends:>,precedes:<                             " 对于特定的字符显示特定的虚拟代表字符
+" 行尾空格:·, 右侧超出屏幕部分:>, 左侧超出屏幕部分:<
+set listchars=trail:·,extends:>,precedes:<                                      " 对于特定的字符显示特定的虚拟代表字符
 set fillchars=vert:\ ,stl:\ ,stlnc:\                                            " 在被分割的窗口间显示空白
 set scrolloff=999                                                               " 上下可视行数
 set sidescroll=1                                                                " 水平滚动的最小列数
@@ -432,6 +432,13 @@ highlight LineNr ctermbg=NONE guibg=NONE
 
 
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 7. 插件设置 Start >>>>>>>>>>>>>>>>>>>>>>>>>>"
+">>>>>>>>>>>>>>>>>> indentLine: 突出显示缩进级别
+let g:indentLine_enabled=1
+let g:indentLine_char_list = ['│', '┊', '┆', '|', '¦']
+let g:indentLine_color_term=239
+let g:indentLine_color_gui = '#505050'
+let g:indentLine_concealcursor='inc'
+let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
 ">>>>>>>>>>>>>>>>>> choosewin: 切换工作区
 nmap - <Plug>(choosewin)
 ">>>>>>>>>>>>>>>>>> ctrlp: 全路径文件模糊搜索

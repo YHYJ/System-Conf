@@ -4,7 +4,7 @@ Plug 'luochen1990/rainbow'              " 彩虹括号，提高代码阅读质�
 Plug 'Sirver/ultisnips'                 " 自动预置代码片段，<插入>模式可用
 Plug 'honza/vim-snippets'               " 代码片段引擎
 Plug 'godlygeek/tabular'                " 文本对齐
-Plug 'Yggdroot/indentLine'              " 显示对齐线
+Plug 'Yggdroot/indentLine'              " 突出显示缩进级别
 Plug 'scrooloose/nerdcommenter'         " 快捷键添加注释
 Plug 'Chiel92/vim-autoformat'           " 使用已安装格式化程序自动格式化
 Plug 'sheerun/vim-polyglot'             " 语法高亮大全
@@ -61,10 +61,8 @@ Plug 'tyru/open-browser.vim'            " 打开URL
 " Plug 'tpope/vim-repeat'                 " 结合 . 重复执行一些插件的命令，支持有限
 
 ">>>EDIT & IDE<<<"
-" Plug 'nathanaelkane/vim-indent-guides'  " 直观显示缩进级别
 " Plug 'junegunn/vim-easy-align'          " 自动对齐：自定义对齐字符
 " Plug 'vim-scripts/a.vim'                " 在源文件和头文件之间快速切换
-" Plug 'matze/vim-move'                   " 文本移动
 
 ">>>Code<<<"
 " Plug 'neomake/neomake'                  " 异步语法检查

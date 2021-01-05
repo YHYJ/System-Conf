@@ -184,8 +184,8 @@ alias i2='workon 2 && ipython'              # 一键开启env3及其ipython
 alias i3='workon 3 && ipython'              # 一键开启env2及其ipython
 alias diff='colordiff'                      # diff着色
 alias lsb_release='lsb_release -a'          # 显示系统信息
-alias todo='nvim TODO.todo.md'              # 快速打开TODOList文件
-alias readme='nvim README.md'               # 快速打开README文件
+alias todo='nvim TODO.todo.md'              # 快速打开TODO文件
+alias me='nvim README.md'                   # 快速打开README文件
 alias ydcv='off && ydcv'                    # 打开ydcv词典
 # --使用指定命令打开指定后缀的文件
 alias -s {conf,hook,dbc,toml,yaml,json,xml,txt,go,rs,nim}=nvim
