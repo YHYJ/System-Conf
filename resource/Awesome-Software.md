@@ -165,6 +165,7 @@ System：系统组件（包含字体）
 | sokit                      | 一个TCP＆UDP数据包发送/接收/传输工具                       | GUI     | 非必要 |
 | qmodbus                    | 基于Qt的Modbus master实现                                  | GUI     | 非必要 |
 | cutecom                    | 串口调试工具                                               | GUI     | 非必要 |
+| mqtt-cli-bin               | MQTT命令行客户端                                           | CLI     | 非必要 |
 
 ## 浏览器
 
