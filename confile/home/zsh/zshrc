@@ -76,7 +76,7 @@ plugins=(
   git                       # 提供git命令的alias
   golang                    # 提供go命令的alias
   docker                    # docker命令自动补全
-  extract                   # 文件解压缩                : extract <file>
+  extract                   # 文件解压缩
   docker-compose            # docker-compose命令自动补全和alias
 )
 
