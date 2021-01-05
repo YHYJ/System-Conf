@@ -40,8 +40,8 @@ filetype plugin on                                                              
 filetype indent on                                                              " 为特定类型文件载入相关缩进文件
 ">>>>>>>>>>>>>>>>>> 显示设置
 set list                                                                        " 显示Tab符
-" 行尾空格:·, 右侧超出屏幕部分:>, 左侧超出屏幕部分:<
-set listchars=tab:\|\ ,trail:·,extends:>,precedes:<                                      " 对于特定的字符显示特定的虚拟代表字符
+" 制表符:|, 行尾空格:·, 右侧超出屏幕部分:>, 左侧超出屏幕部分:<
+set listchars=tab:\|\ ,trail:·,extends:>,precedes:<                             " 对于特定的字符显示特定的虚拟代表字符
 set fillchars=vert:\ ,stl:\ ,stlnc:\                                            " 在被分割的窗口间显示空白
 set scrolloff=999                                                               " 上下可视行数
 set sidescroll=1                                                                " 水平滚动的最小列数
