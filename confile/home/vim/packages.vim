@@ -30,7 +30,6 @@ Plug 'jiangmiao/auto-pairs'                                   " 成对操作，�
 
 ">>>资源管理器<<<"
 Plug 'liuchengxu/vista.vim'                                   " 搜索和查看LSP symbols和tags
-Plug 'ctrlpvim/ctrlp.vim'                                     " 全路径模糊搜索
 Plug 'danro/rename.vim'                                       " 文件重命名
 Plug 'preservim/nerdtree'                                     " vim侧边文件管理器
 Plug 'preservim/nerdcommenter'                                " 快捷键添加注释

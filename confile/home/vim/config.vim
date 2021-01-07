@@ -275,7 +275,7 @@ function! AutoSetDockerCompose()
   call append(15, '    ports:')
   call append(16, "      - ':'")
   call append(17, '    volumes:')
-  call append(18, "      - ':'")
+  call append(18, "      - '/etc/localtime:/etc/localtime'")
   call append(19, '    networks:')
   call append(20, '      '.expand('%:p:h:t').': {}')
   call append(21, '    environment:')
@@ -637,20 +637,6 @@ let g:mkdp_page_title = '「${name}」'                                         
 ">>>>>>>>>>>>>>>>>> vim-todo-lists: 简单的自动维护TODO列表
 let g:VimTodoListsDatesEnabled = 1                                              " 自动插入日期
 let g:VimTodoListsDatesFormat = "%Y-%m-%d %H:%M"                                " 日期格式(Year-Month-Day Hour:Minute)
-">>>>>>>>>>>>>>>>>> python-mode: python IDE
-" [[    跳转到上一个class或function (normal, visual, operator modes)
-" ]]    跳转到下一个class或function (normal, visual, operator modes)
-" [M    跳转到上一个class或method (normal, visual, operator modes)
-" ]M    跳转到下一个class或method (normal, visual, operator modes)
-" aC    操作class，比如: daC, yaC, vaC, caC (normal, operator modes)
-" iC    操作class内容，比如: diC, yiC, viC, ciC (normal, operator modes)
-" aM    操作function或method. Ex: daM, yaM, vaM, caM (normal, operator modes)
-" iM    操作function或method内容. Ex: diM, yiM, viM, ciM (normal, operator modes)
-" let g:pymode_breakpoint_bind = '<LocalLeader>b'                                 " 添加断点
-" let g:pymode_lint_on_fly = 1                                                    " 启用写入时语法检测
-" let g:pymode_lint_on_write = 1                                                  " 启用保存时语法检测
-" let g:pymode_lint_checkers = ['pyflakes', 'pep8']                               " 语法检测标准
-" let g:pymode_doc = 0                                                            " 禁用pymode-doc功能，使用YCM-doc
 "<<<<<<<<<<<<<<<<<<<<<<<<<< 7. 插件设置 End >>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
