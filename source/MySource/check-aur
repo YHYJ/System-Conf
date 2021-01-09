@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+: <<!
+Name: check-aur
+Author: YJ
+Email: yj1516268@outlook.com
+Created Time: 2021-01-09 18:00:25
+
+Description: 检查本地安装的AUR包是否和源保持同步
+
+Attentions:
+-
+
+Depends:
+- parallel
+!
+
+pacman -Qmq | parallel 'result=$(package-query -AQ -f "%v" "{}" | uniq -d | wc -l); [ $result -eq 0  ] && echo "{}"'
