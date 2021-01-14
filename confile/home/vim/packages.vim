@@ -40,10 +40,6 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'                " 根据文件类�
 ">>>Vim中文help<<<"
 Plug 'yianwillis/vimcdoc'                                     " vim中文文档
 
-">>>阅读<<<"
-Plug 'junegunn/limelight.vim'                                 " 阅读模式
-Plug 'junegunn/goyo.vim'                                      " 内容定位
-
 ">>>Fun<<<"
 Plug 'lilydjwg/colorizer'                                     " vim颜色码着色
 Plug 'tyru/open-browser.vim'                                  " 打开URL

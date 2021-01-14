@@ -378,11 +378,11 @@ noremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :Vista!!<CR>
 ">>>>>>>>>>>>>>>>>> <F4> | vim-mundo: 历史撤销树浏览器
 nnoremap <F4> :MundoToggle<CR>
-">>>>>>>>>>>>>>>>>> <F5> | goyo.vim+limelight.vim: 专注+打字机模式
-nnoremap <F5> :call Goyo_Limelight()<CR>
-function! Goyo_Limelight()
-  exec 'Goyo'
-  exec 'Limelight!!'
+">>>>>>>>>>>>>>>>>> <F5> | nerdtree + vista: IDE模式
+nnoremap <F5> :call IDE_MODE()<CR>
+function! IDE_MODE()
+  exec 'Vista!!'
+  exec 'NERDTreeToggle'
 endfunction
 ">>>>>>>>>>>>>>>>>> <F6> | 语法高亮开关
 nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
