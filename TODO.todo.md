@@ -1,3 +1,4 @@
+- [ ] ! 卸载xf86-video-intel (2021-01-28 19:40)
 - [ ] ! 卸载net-tools (2021-01-08 16:42)
 - [ ] Vim配置，参见https://zhuanlan.zhihu.com/p/60907165 (2020-12-28 09:44)
 - [ ] Blog:
