@@ -160,6 +160,7 @@ msr-tools
 ncdu
 neofetch
 neovim
+neovim-symlinks
 nerd-fonts-complete
 net-tools
 netease-cloud-music-gtk
@@ -295,7 +296,6 @@ wqy-zenhei
 xarchiver
 xchm
 xdg-user-dirs
-xf86-video-intel
 xfsprogs
 xorg-bdftopcf
 xorg-docs
