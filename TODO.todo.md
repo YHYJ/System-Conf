@@ -1,5 +1,4 @@
 - [ ] ! 卸载xf86-video-intel (2021-01-28 19:40)
-- [ ] ! 卸载net-tools (2021-01-08 16:42)
 - [ ] Vim配置，参见https://zhuanlan.zhihu.com/p/60907165 (2020-12-28 09:44)
 - [ ] Blog:
   - [ ] mkfs.ntfs加 -Q 参数，否则格式化极其慢 (2020-12-18 13:52)
@@ -230,3 +229,4 @@
   - [X] - w3m (2020-12-23 15:35)
   - [X] + intel-mas-cli-tool: Intel内存和固态的固件更新程序（谨慎） (2020-12-23 18:10)
     - [X] 参考：https://wiki.archlinux.org/index.php/Solid_state_drive#Intel (2020-12-23 18:35)
+- [X] ! 卸载net-tools (2021-01-08 16:42)
